@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Glucokid</string>
+    <string name="title_registration">РЕГИСТРАЦИЯ</string>
+    <string name="title_login">ВХОД</string>
+    <string name="hint_first_name">Введите ваше имя</string>
+    <string name="hint_last_name">Введите вашу фамилию</string>
+    <string name="hint_patronymic">Введите ваше отчество</string>
+    <string name="hint_email">Введите почту</string>
+    <string name="hint_password">Придумайте пароль</string>
+    <string name="btn_register">Зарегистрироваться</string>
+    <string name="btn_login">Войти</string>
+    <string name="error_register">Ошибка регистрации</string>
+    <string name="error_login">Ошибка входа</string>
+    <string name="hint_login_password">Введите пароль</string>
+</resources>
