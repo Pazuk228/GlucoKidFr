@@ -1,20 +1,21 @@
 package com.example.glucokidfr.domain.usecase;
 
 import com.example.glucokidfr.domain.UserRepository;
-import com.example.glucokidfr.domain.entities.ItemUserEntity;
 import com.example.glucokidfr.domain.entities.Status;
+import com.example.glucokidfr.domain.entities.SugarLevel;
+
 import org.jetbrains.annotations.NotNull;
-import java.util.List;
+
 import androidx.core.util.Consumer;
 
-public class GetAllUsersUseCase {
+public class AddSugarUseCase {
     private final UserRepository repository;
 
-    public GetAllUsersUseCase(UserRepository repository) {
+    public AddSugarUseCase(UserRepository repository) {
         this.repository = repository;
     }
 
-    public void execute(@NotNull Long id, Consumer<Status<List<ItemUserEntity>>> callback) {
-        repository.getAllParent(id, callback);
+    public void execute(@NotNull SugarLevel sugar, Consumer<Status<SugarLevel>> callback) {
+        repository.addSugar(sugar, callback);
     }
 }

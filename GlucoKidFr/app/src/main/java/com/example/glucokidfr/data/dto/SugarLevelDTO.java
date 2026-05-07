@@ -1,8 +1,8 @@
 package com.example.glucokidfr.data.dto;
 
 public class SugarLevelDTO {
-    private Long idChild;
-    private Double value;
-    private String time;
-    private String extra;
+    public Long idChild;
+    public Double value;
+    public String time;
+    public String extra;
 }

@@ -1,13 +1,13 @@
 package com.example.glucokidfr.domain.entities;
 
 public class Parent {
-    private final String id;
+    private final Long id;
     private final String firstName;
     private final String secondName;
     private final String lastName;
     private final String phone;
 
-    public Parent(String id, String firstName, String secondName, String lastName, String phone) {
+    public Parent(Long id, String firstName, String secondName, String lastName, String phone) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -15,7 +15,7 @@ public class Parent {
         this.phone = phone;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 

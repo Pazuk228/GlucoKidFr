@@ -1,41 +1,28 @@
 package com.example.glucokidfr.data.dto;
 
+import androidx.annotation.Nullable;
+
 import com.example.glucokidfr.domain.entities.Parent;
+import com.google.gson.annotations.SerializedName;
 
 public class ParentDTO {
-    private String id;
-    private String firstName;
-    private String secondName;
-    private String lastName;
-    private String phone;
+    @Nullable
+    @SerializedName("id")
+    public Long id;
+    @SerializedName("firstName")
+    @Nullable
+    public String firstName;
+    @SerializedName("secondName")
+    @Nullable
+    public String secondName;
+    @SerializedName("lastName")
+    @Nullable
+    public String lastName;
+    @SerializedName("phoneNumber")
+    @Nullable
+    public String phone;
+    @SerializedName("password")
+    @Nullable
+    public String password;
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Parent toDomain() {
-        return new Parent(
-                id,
-                firstName,
-                secondName,
-                lastName,
-                phone
-        );
-    }
 }

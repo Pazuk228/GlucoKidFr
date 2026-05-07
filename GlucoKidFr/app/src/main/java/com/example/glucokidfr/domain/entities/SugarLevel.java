@@ -1,14 +1,14 @@
 package com.example.glucokidfr.domain.entities;
 
 public class SugarLevel {
-    private final String id;
+    private final Long id;
     private final String childId;
     private final double value;
     private final String time;
     private final String extra;
 
 
-    public SugarLevel(String id, String childId, double value, String time, String extra) {
+    public SugarLevel(Long id, String childId, double value, String time, String extra) {
         this.id = id;
         this.childId = childId;
         this.value = value;
@@ -16,7 +16,7 @@ public class SugarLevel {
         this.extra = extra;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
