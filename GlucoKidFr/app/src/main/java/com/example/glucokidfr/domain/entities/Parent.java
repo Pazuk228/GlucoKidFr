@@ -6,13 +6,15 @@ public class Parent {
     private final String secondName;
     private final String lastName;
     private final String phone;
+    private final String password;
 
-    public Parent(Long id, String firstName, String secondName, String lastName, String phone) {
+    public Parent(Long id, String firstName, String secondName, String lastName, String phone, String password) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.lastName = lastName;
         this.phone = phone;
+        this.password = password;
     }
 
     public Long getId() {
@@ -34,5 +36,6 @@ public class Parent {
     public String getPhone() {
         return phone;
     }
+    public String getPassword() { return password; }
 }
 

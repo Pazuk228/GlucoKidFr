@@ -1,42 +1,12 @@
 package com.example.glucokidfr;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.glucokidfr.data.dto.UserRepositoryImpl;
-import com.example.glucokidfr.data.network.RetrofitClient;
-import com.example.glucokidfr.domain.usecase.GetAllUsersUseCase;
-import com.example.glucokidfr.ui.adapters.ParentAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private ParentAdapter adapter;
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ParentAdapter();
-        recyclerView.setAdapter(adapter);
-
-        UserRepositoryImpl repository = new UserRepositoryImpl(RetrofitClient.getInstance().getApiService());
-        GetAllUsersUseCase useCase = new GetAllUsersUseCase(repository);
-
-        useCase.execute(1L, status -> {
-            if (status.getErrors() != null) {
-                Toast.makeText(MainActivity.this, "Ошибка загрузки", Toast.LENGTH_SHORT).show();
-            } else {
-                adapter.setParents(status.getValue());
-            }
-        });
     }
 }

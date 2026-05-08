@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.glucokidfr.ui.startScreen.StartFragment"
+        android:label="Glucokid"
+        tools:layout="@layout/choose_role">
+        <action
+            android:id="@+id/action_startFragment_to_loginParentFragment"
+            app:destination="@id/loginParentFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_loginChildFragment"
+            app:destination="@id/loginChildFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginChildFragment"
+        android:name="com.example.glucokidfr.ui.loginChild.LoginChildFragment"
+        android:label="Вход для ребёнка"
+        tools:layout="@layout/login">
+        <action
+            android:id="@+id/action_loginChildFragment_to_registerChildFragment"
+            app:destination="@id/registerChildFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerChildFragment"
+        android:name="com.example.glucokidfr.ui.registerChild.RegisterChildFragment"
+        android:label="Регистрация ребёнка"
+        tools:layout="@layout/registration" />
+
+    <fragment
+        android:id="@+id/loginParentFragment"
+        android:name="com.example.glucokidfr.ui.loginParent.LoginParentFragment"
+        android:label="Вход для родителя"
+        tools:layout="@layout/login">
+        <action
+            android:id="@+id/action_loginParentFragment_to_registerParentFragment"
+            app:destination="@id/registerParentFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerParentFragment"
+        android:name="com.example.glucokidfr.ui.registerChild.RegisterChildFragment"
+        android:label="Регистрация родителя"
+        tools:layout="@layout/registration" />
+
+</navigation>

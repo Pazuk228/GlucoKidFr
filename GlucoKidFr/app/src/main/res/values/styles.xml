@@ -9,7 +9,6 @@
         <item name="boxCornerRadiusBottomStart">50dp</item>
         <item name="boxCornerRadiusBottomEnd">50dp</item>
         <item name="boxBackgroundColor">@color/orange</item>
-        <item name="boxBackgroundMode">outline</item>
         <item name="boxStrokeColor">@color/black</item>
         <item name="android:fontFamily">@font/comicsansms</item>
     </style>

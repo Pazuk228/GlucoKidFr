@@ -3,8 +3,6 @@ package com.example.glucokidfr.domain;
 import android.media.RouteListingPreference;
 
 import com.example.glucokidfr.domain.entities.Child;
-import com.example.glucokidfr.domain.entities.FullUserEntity;
-import com.example.glucokidfr.domain.entities.ItemUserEntity;
 import com.example.glucokidfr.domain.entities.Parent;
 import com.example.glucokidfr.domain.entities.Status;
 import com.example.glucokidfr.domain.entities.SugarLevel;
@@ -16,7 +14,6 @@ import androidx.core.util.Consumer;
 
 public interface UserRepository {
     void getParent(@NotNull Long id, Consumer<Status<Parent>> callback);
-    void getAllParent(@NotNull Long id, Consumer<Status<List<ItemUserEntity>>> callback);
     void registerParent(@NotNull Parent parent, Consumer<Status<Parent>> callback);
     void getChildren(@NotNull String parentId, Consumer<Status<List<Child>>> callback);
     void addChild(@NotNull Child child, Consumer<Status<Child>> callback);
@@ -25,5 +22,8 @@ public interface UserRepository {
     void addSugar(@NotNull SugarLevel sugar, Consumer<Status<SugarLevel>> callback);
     void updateSugar(@NotNull String sugarId, @NotNull SugarLevel sugar, Consumer<Status<SugarLevel>> callback);
     void deleteSugar(@NotNull String sugarId, Consumer<Status<Void>> callback);
+    void registerChild(@NotNull Child child, Consumer<Status<Child>> callback);
+    void loginChild(@NotNull String phone, @NotNull String password, Consumer<Status<Child>> callback);
+    void loginParent(@NotNull String phone, @NotNull String password, Consumer<Status<Parent>> callback);
 
 }

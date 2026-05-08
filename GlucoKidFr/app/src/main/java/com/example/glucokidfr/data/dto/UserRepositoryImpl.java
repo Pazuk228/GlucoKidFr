@@ -4,7 +4,6 @@ import com.example.glucokidfr.data.network.ApiService;
 import com.example.glucokidfr.data.utils.ToConsumer;
 import com.example.glucokidfr.domain.UserRepository;
 import com.example.glucokidfr.domain.entities.Child;
-import com.example.glucokidfr.domain.entities.ItemUserEntity;
 import com.example.glucokidfr.domain.entities.Parent;
 import com.example.glucokidfr.domain.entities.Status;
 import com.example.glucokidfr.domain.entities.SugarLevel;
@@ -20,43 +19,122 @@ public class UserRepositoryImpl implements UserRepository {
     public UserRepositoryImpl(ApiService apiService) {
         this.apiService = apiService;
     }
+//    @Override
+//    public void getAllParent(@NotNull Long id, Consumer<Status<List<ItemUserEntity>>> callback) {
+//        apiService.getAllParents().enqueue(new ToConsumer<List<ParentDTO>, List<ItemUserEntity>>(
+//                callback,
+//                parentDTOList -> {
+//                    List<ItemUserEntity> result = new ArrayList<>();
+//                    for (ParentDTO dto : parentDTOList) {
+//                        String fullName = (dto.firstName != null ? dto.firstName : "") +
+//                                " " +
+//                                (dto.lastName != null ? dto.lastName : "");
+//                        result.add(new ItemUserEntity(
+//                                fullName.trim(),
+//                                dto.id != null ? dto.id : 0L
+//                        ));
+//                    }
+//                    return result;
+//                }
+//        ));
+//    }
+@Override
+public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
+    apiService.getParent(id).enqueue(new ToConsumer<>(
+            callback,
+            dto -> new Parent(
+                    dto.id,
+                    dto.firstName,
+                    dto.secondName,
+                    dto.lastName,
+                    dto.phone,
+                    dto.password
+            )
+    ));
+}
     @Override
-    public void getAllParent(@NotNull Long id, Consumer<Status<List<ItemUserEntity>>> callback) {
-        apiService.getAllParents().enqueue(new ToConsumer<List<ParentDTO>, List<ItemUserEntity>>(
+    public void loginParent(@NotNull String phone, @NotNull String password, Consumer<Status<Parent>> callback) {
+        ParentDTO dto = new ParentDTO();
+        dto.phone = phone;
+        dto.password = password;
+
+        apiService.loginParent(dto).enqueue(new ToConsumer<>(
                 callback,
-                parentDTOList -> {
-                    List<ItemUserEntity> result = new ArrayList<>();
-                    for (ParentDTO dto : parentDTOList) {
-                        String fullName = (dto.firstName != null ? dto.firstName : "") +
-                                " " +
-                                (dto.lastName != null ? dto.lastName : "");
-                        result.add(new ItemUserEntity(
-                                fullName.trim(),
-                                dto.id != null ? dto.id : 0L
+                responseDto -> new Parent(
+                        responseDto.id,
+                        responseDto.firstName,
+                        responseDto.secondName,
+                        responseDto.lastName,
+                        responseDto.phone,
+                        responseDto.password
+                )
+        ));
+    }
+
+    @Override
+    public void registerParent(@NotNull Parent parent, Consumer<Status<Parent>> callback) {
+        ParentDTO dto = new ParentDTO();
+        dto.firstName = parent.getFirstName();
+        dto.secondName = parent.getSecondName();
+        dto.lastName = parent.getLastName();
+        dto.phone = parent.getPhone();
+
+        apiService.registerParent(dto).enqueue(new ToConsumer<>(
+                callback,
+                responseDto -> new Parent(
+                        responseDto.id,
+                        responseDto.firstName,
+                        responseDto.secondName,
+                        responseDto.lastName,
+                        responseDto.phone,
+                        responseDto.password
+                )
+        ));
+    }
+
+    @Override
+    public void getChildren(@NotNull String parentId, Consumer<Status<List<Child>>> callback) {
+        apiService.getChildren(Long.parseLong(parentId)).enqueue(new ToConsumer<>(
+                callback,
+                dtoList -> {
+                    List<Child> result = new ArrayList<>();
+                    for (ChildDTO dto : dtoList) {
+                        result.add(new Child(
+                                dto.id,
+                                null,
+                                dto.firstName,
+                                dto.secondName,
+                                dto.lastName,
+                                dto.phone,
+                                dto.password
                         ));
                     }
                     return result;
                 }
         ));
     }
-    @Override
-    public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
-
-    }
-
-    @Override
-    public void registerParent(@NotNull Parent parent, Consumer<Status<Parent>> callback) {
-
-    }
-
-    @Override
-    public void getChildren(@NotNull String parentId, Consumer<Status<List<Child>>> callback) {
-
-    }
 
     @Override
     public void addChild(@NotNull Child child, Consumer<Status<Child>> callback) {
+        ChildDTO dto = new ChildDTO();
+        dto.firstName = child.getFirstName();
+        dto.secondName = child.getSecondName();
+        dto.lastName = child.getLastName();
+        dto.phone = child.getPhone();
+        dto.password = child.getPassword();
 
+        apiService.addChild(dto).enqueue(new ToConsumer<>(
+                callback,
+                responseDto -> new Child(
+                        responseDto.id,
+                        null,
+                        responseDto.firstName,
+                        responseDto.secondName,
+                        responseDto.lastName,
+                        responseDto.phone,
+                        responseDto.password
+                )
+        ));
     }
 
     @Override
@@ -83,5 +161,45 @@ public class UserRepositoryImpl implements UserRepository {
     public void deleteSugar(@NotNull String sugarId, Consumer<Status<Void>> callback) {
 
     }
+    @Override
+    public void registerChild(@NotNull Child child, Consumer<Status<Child>> callback) {
+        ChildDTO dto = new ChildDTO();
+        dto.firstName = child.getFirstName();
+        dto.secondName = child.getSecondName();
+        dto.lastName = child.getLastName();
+        dto.phone = child.getPhone();
+        dto.password = child.getPassword();
 
+        apiService.registerChild(dto).enqueue(new ToConsumer<>(
+                callback,
+                responseDto -> new Child(
+                        responseDto.id,
+                        null,
+                        responseDto.firstName,
+                        responseDto.secondName,
+                        responseDto.lastName,
+                        responseDto.phone,
+                        responseDto.password
+                )
+        ));
+    }
+    @Override
+    public void loginChild(@NotNull String phone, @NotNull String password, Consumer<Status<Child>> callback) {
+        ChildDTO dto = new ChildDTO();
+        dto.phone = phone;
+        dto.password = password;
+
+        apiService.loginChild(dto).enqueue(new ToConsumer<>(
+                callback,
+                responseDto -> new Child(
+                        responseDto.id,
+                        null,
+                        responseDto.firstName,
+                        responseDto.secondName,
+                        responseDto.lastName,
+                        responseDto.phone,
+                        responseDto.password
+                )
+        ));
+    }
 }

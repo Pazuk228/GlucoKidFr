@@ -12,4 +12,6 @@
     <string name="error_register">Ошибка регистрации</string>
     <string name="error_login">Ошибка входа</string>
     <string name="hint_login_password">Введите пароль</string>
+    <string name="i_parent">Я родитель</string>
+    <string name="i_child">Я ребёнок</string>
 </resources>

@@ -24,5 +24,12 @@ public interface ApiService {
     Call<ParentDTO> registerParent(@Body ParentDTO parent);
     @POST("child/add")
     Call<ChildDTO> addChild(@Body ChildDTO child);
+    @POST("child/register")
+    Call<ChildDTO> registerChild(@Body ChildDTO child);
+    @POST("parent/login")
+    Call<ParentDTO> loginParent(@Body ParentDTO parent);
+    @POST("child/login")
+    Call<ChildDTO> loginChild(@Body ChildDTO child);
+
 }
 //HTTP
