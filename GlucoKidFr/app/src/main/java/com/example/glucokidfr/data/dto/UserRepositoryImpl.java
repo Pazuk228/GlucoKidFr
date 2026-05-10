@@ -19,25 +19,6 @@ public class UserRepositoryImpl implements UserRepository {
     public UserRepositoryImpl(ApiService apiService) {
         this.apiService = apiService;
     }
-//    @Override
-//    public void getAllParent(@NotNull Long id, Consumer<Status<List<ItemUserEntity>>> callback) {
-//        apiService.getAllParents().enqueue(new ToConsumer<List<ParentDTO>, List<ItemUserEntity>>(
-//                callback,
-//                parentDTOList -> {
-//                    List<ItemUserEntity> result = new ArrayList<>();
-//                    for (ParentDTO dto : parentDTOList) {
-//                        String fullName = (dto.firstName != null ? dto.firstName : "") +
-//                                " " +
-//                                (dto.lastName != null ? dto.lastName : "");
-//                        result.add(new ItemUserEntity(
-//                                fullName.trim(),
-//                                dto.id != null ? dto.id : 0L
-//                        ));
-//                    }
-//                    return result;
-//                }
-//        ));
-//    }
 @Override
 public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
     apiService.getParent(id).enqueue(new ToConsumer<>(
@@ -78,6 +59,8 @@ public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
         dto.secondName = parent.getSecondName();
         dto.lastName = parent.getLastName();
         dto.phone = parent.getPhone();
+        dto.password = parent.getPassword();
+        //СЕРЕЖА Я ИЗЗА ТЕБЯ ВЕЗДЕ ПАРОЛЬ ЗАБЫЛА
 
         apiService.registerParent(dto).enqueue(new ToConsumer<>(
                 callback,

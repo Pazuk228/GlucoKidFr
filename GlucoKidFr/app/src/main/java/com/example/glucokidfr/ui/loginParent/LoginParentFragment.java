@@ -4,16 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
 import com.example.glucokidfr.R;
-import com.example.glucokidfr.data.dto.UserRepositoryImpl;
-import com.example.glucokidfr.data.network.RetrofitClient;
-import com.example.glucokidfr.domain.entities.Parent;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -25,6 +21,7 @@ public class LoginParentFragment extends Fragment {
     private MaterialButton btnRegister;
     private TextView tvError;
     private View progressBar;
+    private LoginParentViewModel viewModel;
 
     public LoginParentFragment() {
         super(R.layout.login);
@@ -41,52 +38,45 @@ public class LoginParentFragment extends Fragment {
         tvError = view.findViewById(R.id.error);
         progressBar = view.findViewById(R.id.loading);
 
-        btnLogin.setOnClickListener(v -> login());
+        viewModel = new ViewModelProvider(this).get(LoginParentViewModel.class);
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            btnLogin.setEnabled(!isLoading);
+        });
+
+        viewModel.getError().observe(getViewLifecycleOwner(), error -> {
+            if (error != null) {
+                tvError.setVisibility(View.VISIBLE);
+                tvError.setText(error);
+            } else {
+                tvError.setVisibility(View.GONE);
+            }
+        });
+
+        viewModel.getLoginResult().observe(getViewLifecycleOwner(), parent -> {
+            if (parent != null) {
+                Toast.makeText(getContext(), "Добро пожаловать, " + parent.getFirstName(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        btnLogin.setOnClickListener(v -> {
+            String phone = etPhone.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
+
+            if (phone.isEmpty() || password.isEmpty()) {
+                tvError.setVisibility(View.VISIBLE);
+                tvError.setText("Заполните все поля");
+                return;
+            }
+
+            tvError.setVisibility(View.GONE);
+            viewModel.login(phone, password);
+        });
+
         btnRegister.setOnClickListener(v -> {
             Navigation.findNavController(view)
                     .navigate(R.id.action_loginParentFragment_to_registerParentFragment);
         });
-    }
-
-    private void login() {
-        String phone = etPhone.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-
-        if (phone.isEmpty() || password.isEmpty()) {
-            showError("Заполните все поля");
-            return;
-        }
-
-        showLoading(true);
-        hideError();
-
-        UserRepositoryImpl repository = new UserRepositoryImpl(RetrofitClient.getInstance().getApiService());
-
-        repository.getParent(1L, status -> {
-            showLoading(false);
-
-            if (status.getErrors() != null) {
-                showError("Ошибка входа: " + status.getErrors().getMessage());
-            } else if (status.getValue() != null) {
-                Parent parent = status.getValue();
-                Toast.makeText(getContext(), "Добро пожаловать, " + parent.getFirstName(), Toast.LENGTH_SHORT).show();
-            } else {
-                showError("Неверный телефон или пароль");
-            }
-        });
-    }
-
-    private void showLoading(boolean show) {
-        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-        btnLogin.setEnabled(!show);
-    }
-
-    private void showError(String message) {
-        tvError.setVisibility(View.VISIBLE);
-        tvError.setText(message);
-    }
-
-    private void hideError() {
-        tvError.setVisibility(View.GONE);
     }
 }

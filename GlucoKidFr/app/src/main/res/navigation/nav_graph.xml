@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/registerParentFragment"
-        android:name="com.example.glucokidfr.ui.registerChild.RegisterChildFragment"
+        android:name="com.example.glucokidfr.ui.registerParent.RegisterParentFragment"
         android:label="Регистрация родителя"
         tools:layout="@layout/registration" />
 
