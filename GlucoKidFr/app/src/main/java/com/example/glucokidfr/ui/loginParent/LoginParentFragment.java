@@ -57,6 +57,9 @@ public class LoginParentFragment extends Fragment {
         viewModel.getLoginResult().observe(getViewLifecycleOwner(), parent -> {
             if (parent != null) {
                 Toast.makeText(getContext(), "Добро пожаловать, " + parent.getFirstName(), Toast.LENGTH_LONG).show();
+
+                Navigation.findNavController(requireView())
+                        .navigate(R.id.action_loginParentFragment_to_parentMainFragment);
             }
         });
 

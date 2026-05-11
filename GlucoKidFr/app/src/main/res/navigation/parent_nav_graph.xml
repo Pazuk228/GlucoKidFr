@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_nav_graph"
+    app:startDestination="@id/addChildFragment">
+
+    <fragment
+        android:id="@+id/addChildFragment"
+        android:name="com.example.glucokidfr.ui.addChildScreen.AddChildFragment"
+        android:label="Добавить ребенка"
+        tools:layout="@layout/add_child_screen" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/homeFragment"-->
+<!--        android:name="androidx.fragment.app.Fragment"-->
+<!--        android:label="Главная" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/scheduleFragment"-->
+<!--        android:name="androidx.fragment.app.Fragment"-->
+<!--        android:label="Расписание" />-->
+
+</navigation>

@@ -39,9 +39,16 @@
         android:name="com.example.glucokidfr.ui.loginParent.LoginParentFragment"
         android:label="Вход для родителя"
         tools:layout="@layout/login">
+
         <action
             android:id="@+id/action_loginParentFragment_to_registerParentFragment"
             app:destination="@id/registerParentFragment" />
+
+        <action
+            android:id="@+id/action_loginParentFragment_to_parentMainFragment"
+            app:destination="@id/parentMainFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -49,5 +56,11 @@
         android:name="com.example.glucokidfr.ui.registerParent.RegisterParentFragment"
         android:label="Регистрация родителя"
         tools:layout="@layout/registration" />
+
+    <fragment
+        android:id="@+id/parentMainFragment"
+        android:name="com.example.glucokidfr.ui.parent.ParentMainFragment"
+        android:label="Главный экран родителя"
+        tools:layout="@layout/fragment_parent_main" />
 
 </navigation>

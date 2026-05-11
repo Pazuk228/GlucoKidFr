@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:title="Главная" />
+    <item
+        android:id="@+id/addChildFragment"
+        android:title="Добавить" />
+    <item
+        android:id="@+id/scheduleFragment"
+        android:title="Расписание" />
+</menu>
