@@ -58,6 +58,9 @@ public class LoginParentFragment extends Fragment {
             if (parent != null) {
                 Toast.makeText(getContext(), "Добро пожаловать, " + parent.getFirstName(), Toast.LENGTH_LONG).show();
 
+                requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+                        .edit().putLong("parentId", parent.getId()).apply();
+
                 Navigation.findNavController(requireView())
                         .navigate(R.id.action_loginParentFragment_to_parentMainFragment);
             }

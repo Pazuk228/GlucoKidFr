@@ -1,5 +1,6 @@
 package com.example.glucokidfr.ui.loginChild;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -56,7 +57,13 @@ public class LoginChildFragment extends Fragment {
 
         viewModel.getLoginResult().observe(getViewLifecycleOwner(), child -> {
             if (child != null) {
-                Toast.makeText(getContext(), "Добро пожаловать, " + child.getFirstName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Привет, " + child.getFirstName(), Toast.LENGTH_SHORT).show();
+
+                requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+                        .edit().putLong("childId", child.getId()).apply();
+
+                Navigation.findNavController(requireView())
+                        .navigate(R.id.action_loginChildFragment_to_childMainFragment);
             }
         });
 

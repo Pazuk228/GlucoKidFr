@@ -12,14 +12,14 @@ public interface ApiService {
 
     @GET("parent/{id}")
     Call<ParentDTO> getParent(@Path("id") long parentId);
-    @GET("parents")
+    @GET("parent")
     Call<List<ParentDTO>> getAllParents();
     @GET("parent/{id}/children")
     Call<List<ChildDTO>> getChildren(@Path("id") long parentId);
-    @GET("child/{id}/sugar")
+    @GET("sugar/child/{id}")
     Call<List<SugarLevelDTO>> getSugarHistory(@Path("id") long childId);
     @POST("sugar/add")
-    Call<Void> addSugar(@Body SugarLevelDTO sugar);
+    Call<SugarLevelDTO> addSugar(@Body SugarLevelDTO sugar);
     @POST("parent/register")
     Call<ParentDTO> registerParent(@Body ParentDTO parent);
     @POST("child/add")
@@ -30,6 +30,9 @@ public interface ApiService {
     Call<ParentDTO> loginParent(@Body ParentDTO parent);
     @POST("child/login")
     Call<ChildDTO> loginChild(@Body ChildDTO child);
-
+    @POST("child/{id}/generate-code")
+    Call<String> generateConnectionCode(@Path("id") Long childId);
+    @POST("parent/{parentId}/connect")
+    Call<ChildDTO> linkChildByCode(@Path("parentId") long parentId, @Query("code") String code);
 }
 //HTTP

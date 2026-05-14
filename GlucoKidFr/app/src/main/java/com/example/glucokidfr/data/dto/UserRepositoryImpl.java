@@ -16,23 +16,26 @@ import androidx.core.util.Consumer;
 
 public class UserRepositoryImpl implements UserRepository {
     private final ApiService apiService;
+
     public UserRepositoryImpl(ApiService apiService) {
         this.apiService = apiService;
     }
-@Override
-public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
-    apiService.getParent(id).enqueue(new ToConsumer<>(
-            callback,
-            dto -> new Parent(
-                    dto.id,
-                    dto.firstName,
-                    dto.secondName,
-                    dto.lastName,
-                    dto.phone,
-                    dto.password
-            )
-    ));
-}
+
+    @Override
+    public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
+        apiService.getParent(id).enqueue(new ToConsumer<>(
+                callback,
+                dto -> new Parent(
+                        dto.id,
+                        dto.firstName,
+                        dto.secondName,
+                        dto.lastName,
+                        dto.phone,
+                        dto.password
+                )
+        ));
+    }
+
     @Override
     public void loginParent(@NotNull String phone, @NotNull String password, Consumer<Status<Parent>> callback) {
         ParentDTO dto = new ParentDTO();
@@ -60,7 +63,6 @@ public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
         dto.lastName = parent.getLastName();
         dto.phone = parent.getPhone();
         dto.password = parent.getPassword();
-        //СЕРЕЖА Я ИЗЗА ТЕБЯ ВЕЗДЕ ПАРОЛЬ ЗАБЫЛА
 
         apiService.registerParent(dto).enqueue(new ToConsumer<>(
                 callback,
@@ -122,28 +124,41 @@ public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
 
     @Override
     public void deleteChild(@NotNull String childId, Consumer<Status<Void>> callback) {
-
     }
 
     @Override
     public void getSugarHistory(@NotNull String childId, Consumer<Status<List<SugarLevel>>> callback) {
-
+        apiService.getSugarHistory(Long.parseLong(childId)).enqueue(new ToConsumer<>(
+                callback,
+                dtoList -> {
+                    List<SugarLevel> result = new ArrayList<>();
+                    for (SugarLevelDTO dto : dtoList) {
+                        SugarLevel sugar = new SugarLevel(
+                                null,
+                                String.valueOf(dto.idChild),
+                                dto.value != null ? dto.value : 0.0,
+                                dto.time,
+                                dto.extra
+                        );
+                        result.add(sugar);
+                    }
+                    return result;
+                }
+        ));
     }
 
     @Override
     public void addSugar(@NotNull SugarLevel sugar, Consumer<Status<SugarLevel>> callback) {
-
     }
 
     @Override
     public void updateSugar(@NotNull String sugarId, @NotNull SugarLevel sugar, Consumer<Status<SugarLevel>> callback) {
-
     }
 
     @Override
     public void deleteSugar(@NotNull String sugarId, Consumer<Status<Void>> callback) {
-
     }
+
     @Override
     public void registerChild(@NotNull Child child, Consumer<Status<Child>> callback) {
         ChildDTO dto = new ChildDTO();
@@ -166,6 +181,7 @@ public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
                 )
         ));
     }
+
     @Override
     public void loginChild(@NotNull String phone, @NotNull String password, Consumer<Status<Child>> callback) {
         ChildDTO dto = new ChildDTO();
@@ -173,6 +189,30 @@ public void getParent(@NotNull Long id, Consumer<Status<Parent>> callback) {
         dto.password = password;
 
         apiService.loginChild(dto).enqueue(new ToConsumer<>(
+                callback,
+                responseDto -> new Child(
+                        responseDto.id,
+                        null,
+                        responseDto.firstName,
+                        responseDto.secondName,
+                        responseDto.lastName,
+                        responseDto.phone,
+                        responseDto.password
+                )
+        ));
+    }
+
+    @Override
+    public void generateConnectionCode(@NotNull Long childId, Consumer<Status<String>> callback) {
+        apiService.generateConnectionCode(childId).enqueue(new ToConsumer<>(
+                callback,
+                code -> code
+        ));
+    }
+
+    @Override
+    public void linkChildByCode(@NotNull String code, @NotNull Long parentId, Consumer<Status<Child>> callback) {
+        apiService.linkChildByCode(parentId, code).enqueue(new ToConsumer<>(
                 callback,
                 responseDto -> new Child(
                         responseDto.id,

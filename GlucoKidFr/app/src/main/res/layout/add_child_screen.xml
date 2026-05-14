@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80dp"
                 android:layout_marginBottom="32dp"
-                android:text="@string/enter_child_phone"
+                android:text="@string/enter_child_code"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
@@ -33,12 +33,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 app:startIconTint="@color/darkOrange"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etChildPhone"
+                    android:id="@+id/etInputCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
@@ -47,7 +46,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddChild"
+                android:id="@+id/btnSubmitCode"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:text="@string/btn_add_child"

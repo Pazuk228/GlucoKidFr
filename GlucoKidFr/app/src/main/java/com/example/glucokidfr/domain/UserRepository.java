@@ -25,5 +25,6 @@ public interface UserRepository {
     void registerChild(@NotNull Child child, Consumer<Status<Child>> callback);
     void loginChild(@NotNull String phone, @NotNull String password, Consumer<Status<Child>> callback);
     void loginParent(@NotNull String phone, @NotNull String password, Consumer<Status<Parent>> callback);
-
+    void generateConnectionCode(@NotNull Long childId, Consumer<Status<String>> callback);
+    void linkChildByCode(@NotNull String code, @NotNull Long parentId, Consumer<Status<Child>> callback);
 }

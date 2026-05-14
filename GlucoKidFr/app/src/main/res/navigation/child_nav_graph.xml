@@ -2,20 +2,20 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parent_nav_graph"
-    app:startDestination="@id/addChildFragment">
+    android:id="@+id/child_nav_graph"
+    app:startDestination="@id/generateCodeFragment">
 
     <fragment
-        android:id="@+id/addChildFragment"
-        android:name="com.example.glucokidfr.ui.addChildScreen.AddChildFragment"
-        android:label="Добавить ребенка"
-        tools:layout="@layout/add_child_screen" />
+        android:id="@+id/generateCodeFragment"
+        android:name="com.example.glucokidfr.ui.child.GenerateCodeFragment"
+        android:label="Код"
+        tools:layout="@layout/child_generate_code" />
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/childHomeFragment"
         android:name="androidx.fragment.app.Fragment"
         android:label="Главная"
-        tools:layout="@layout/home_screen_parent" />
+        tools:layout="@layout/home_screen_child"/>
 
     <fragment
         android:id="@+id/scheduleFragment"

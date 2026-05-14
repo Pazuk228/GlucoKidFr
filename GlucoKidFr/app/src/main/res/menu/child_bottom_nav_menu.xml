@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/childHomeFragment"
         android:icon="@drawable/carrot_img"
         android:title="Главная" />
     <item
-        android:id="@+id/addChildFragment"
+        android:id="@+id/generateCodeFragment"
         android:icon="@drawable/add_img"
-        android:title="Добавить" />
+        android:title="Код" />
     <item
         android:id="@+id/scheduleFragment"
         android:icon="@drawable/set_img"

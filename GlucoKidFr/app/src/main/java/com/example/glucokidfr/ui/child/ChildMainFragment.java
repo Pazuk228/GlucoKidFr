@@ -1,20 +1,22 @@
-package com.example.glucokidfr.ui.parent;
+package com.example.glucokidfr.ui.child;
 
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+
 import com.example.glucokidfr.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class ParentMainFragment extends Fragment {
+public class ChildMainFragment extends Fragment {
 
-    public ParentMainFragment() {
-        super(R.layout.fragment_parent_main);
+    public ChildMainFragment() {
+        super(R.layout.fragment_child_main);
     }
 
     @Override
@@ -22,12 +24,11 @@ public class ParentMainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         NavHostFragment navHostFragment = (NavHostFragment) getChildFragmentManager()
-                .findFragmentById(R.id.parent_nav_host_fragment);
+                .findFragmentById(R.id.child_nav_host_fragment);
 
         if (navHostFragment != null) {
             NavController navController = navHostFragment.getNavController();
-            BottomNavigationView bottomNav = view.findViewById(R.id.bottom_navigation);
-            bottomNav.setItemIconTintList(null);
+            BottomNavigationView bottomNav = view.findViewById(R.id.child_bottom_navigation);
             NavigationUI.setupWithNavController(bottomNav, navController);
         }
     }

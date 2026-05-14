@@ -28,11 +28,11 @@ public class SugarLevel {
         return value;
     }
 
-    public String getExtra() {
-        return extra;
-    }
-
     public String getTime() {
         return time;
+    }
+
+    public String getExtra() {
+        return extra;
     }
 }

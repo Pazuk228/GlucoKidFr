@@ -17,8 +17,8 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class AddChildFragment extends Fragment {
 
-    private TextInputEditText etChildPhone;
-    private MaterialButton btnAddChild;
+    private TextInputEditText etInputCode;
+    private MaterialButton btnSubmitCode;
     private ProgressBar progressBar;
     private TextView tvError;
     private AddChildViewModel viewModel;
@@ -31,8 +31,8 @@ public class AddChildFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        etChildPhone = view.findViewById(R.id.etChildPhone);
-        btnAddChild = view.findViewById(R.id.btnAddChild);
+        etInputCode = view.findViewById(R.id.etInputCode);
+        btnSubmitCode = view.findViewById(R.id.btnSubmitCode);
         progressBar = view.findViewById(R.id.progressBar);
         tvError = view.findViewById(R.id.tvError);
 
@@ -40,7 +40,7 @@ public class AddChildFragment extends Fragment {
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-            btnAddChild.setEnabled(!isLoading);
+            btnSubmitCode.setEnabled(!isLoading);
         });
 
         viewModel.getError().observe(getViewLifecycleOwner(), error -> {
@@ -55,21 +55,31 @@ public class AddChildFragment extends Fragment {
         viewModel.getAddChildResult().observe(getViewLifecycleOwner(), child -> {
             if (child != null) {
                 Toast.makeText(getContext(), "Ребёнок успешно добавлен!", Toast.LENGTH_LONG).show();
-                etChildPhone.setText("");
+                etInputCode.setText("");
             }
         });
 
-        btnAddChild.setOnClickListener(v -> {
-            String phone = etChildPhone.getText() != null ? etChildPhone.getText().toString().trim() : "";
+        btnSubmitCode.setOnClickListener(v -> {
+            String code = etInputCode.getText() != null ? etInputCode.getText().toString().trim() : "";
 
-            if (phone.isEmpty()) {
+            if (code.isEmpty()) {
                 tvError.setVisibility(View.VISIBLE);
-                tvError.setText("Введите номер телефона");
+                tvError.setText("Введите 6-значный код");
                 return;
             }
+            Long currentParentId = requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+                    .getLong("parentId", -1L);
+
+            if (currentParentId != -1L) {
+                tvError.setVisibility(View.GONE);
+                viewModel.linkChild(code, currentParentId);
+
+            } else {
+                tvError.setVisibility(View.VISIBLE);
+                tvError.setText("Ошибка: вы не авторизованы как родитель");
+            }
+        });
 
             tvError.setVisibility(View.GONE);
-            viewModel.addChild(phone);
-        });
     }
 }

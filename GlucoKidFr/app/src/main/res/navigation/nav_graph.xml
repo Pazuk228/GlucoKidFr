@@ -26,6 +26,12 @@
         <action
             android:id="@+id/action_loginChildFragment_to_registerChildFragment"
             app:destination="@id/registerChildFragment" />
+
+        <action
+            android:id="@+id/action_loginChildFragment_to_childMainFragment"
+            app:destination="@id/childMainFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -62,5 +68,11 @@
         android:name="com.example.glucokidfr.ui.parent.ParentMainFragment"
         android:label="Главный экран родителя"
         tools:layout="@layout/fragment_parent_main" />
+
+    <fragment
+        android:id="@+id/childMainFragment"
+        android:name="com.example.glucokidfr.ui.child.ChildMainFragment"
+        android:label="Главный экран ребенка"
+        tools:layout="@layout/fragment_child_main" />
 
 </navigation>
