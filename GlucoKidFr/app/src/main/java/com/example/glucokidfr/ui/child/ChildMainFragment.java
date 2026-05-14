@@ -29,6 +29,7 @@ public class ChildMainFragment extends Fragment {
         if (navHostFragment != null) {
             NavController navController = navHostFragment.getNavController();
             BottomNavigationView bottomNav = view.findViewById(R.id.child_bottom_navigation);
+            bottomNav.setItemIconTintList(null);
             NavigationUI.setupWithNavController(bottomNav, navController);
         }
     }

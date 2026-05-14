@@ -26,7 +26,5 @@
         app:itemIconSize="80dp"
         app:itemIconTint="@null"
         app:itemRippleColor="@null"
-        app:itemActiveIndicatorStyle="@null"
         app:menu="@menu/child_bottom_nav_menu" />
-
 </LinearLayout>
