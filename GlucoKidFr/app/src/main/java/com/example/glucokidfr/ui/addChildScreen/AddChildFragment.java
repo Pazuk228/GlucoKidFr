@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.glucokidfr.R;
 import com.google.android.material.button.MaterialButton;
@@ -55,7 +56,9 @@ public class AddChildFragment extends Fragment {
         viewModel.getAddChildResult().observe(getViewLifecycleOwner(), child -> {
             if (child != null) {
                 Toast.makeText(getContext(), "Ребёнок успешно добавлен!", Toast.LENGTH_LONG).show();
-                etInputCode.setText("");
+
+                Navigation.findNavController(requireView())
+                        .navigate(R.id.action_addChildFragment_to_childrenListFragment);
             }
         });
 

@@ -1,4 +1,4 @@
-package com.example.glucokidfr.ui.child;
+package com.example.glucokidfr.ui.generateCode;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

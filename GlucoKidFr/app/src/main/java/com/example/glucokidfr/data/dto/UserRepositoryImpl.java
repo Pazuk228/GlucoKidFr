@@ -149,6 +149,22 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void addSugar(@NotNull SugarLevel sugar, Consumer<Status<SugarLevel>> callback) {
+        SugarLevelDTO dto = new SugarLevelDTO();
+        dto.idChild = Long.parseLong(sugar.getChildId());
+        dto.value = sugar.getValue();
+        dto.time = sugar.getTime();
+        dto.extra = sugar.getExtra();
+
+        apiService.addSugar(dto).enqueue(new ToConsumer<>(
+                callback,
+                responseDto -> new SugarLevel(
+                        responseDto != null ? responseDto.id : null,
+                        String.valueOf(dto.idChild),
+                        dto.value,
+                        dto.time,
+                        dto.extra
+                )
+        ));
     }
 
     @Override

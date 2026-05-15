@@ -1,4 +1,4 @@
-package com.example.glucokidfr.ui.child;
+package com.example.glucokidfr.ui.generateCode;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -68,5 +68,16 @@ public class GenerateCodeFragment extends Fragment {
                 tvError.setText("Ошибка: вы не авторизованы");
             }
         });
+        MaterialButton btnReady = view.findViewById(R.id.btnReady);
+
+        if (btnReady != null) {
+            btnReady.setOnClickListener(v -> {
+                requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+                        .edit().putBoolean("isLinked", true).apply();
+
+                androidx.navigation.Navigation.findNavController(v)
+                        .navigate(R.id.action_generateCodeFragment_to_sendSugarChildFragment);
+            });
+        }
     }
 }

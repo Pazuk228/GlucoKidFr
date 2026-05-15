@@ -23,14 +23,30 @@ public class ChildMainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        NavHostFragment navHostFragment = (NavHostFragment) getChildFragmentManager()
-                .findFragmentById(R.id.child_nav_host_fragment);
+        androidx.navigation.fragment.NavHostFragment navHostFragment =
+                (androidx.navigation.fragment.NavHostFragment) getChildFragmentManager()
+                        .findFragmentById(R.id.child_nav_host_fragment);
 
         if (navHostFragment != null) {
-            NavController navController = navHostFragment.getNavController();
-            BottomNavigationView bottomNav = view.findViewById(R.id.child_bottom_navigation);
+            androidx.navigation.NavController navController = navHostFragment.getNavController();
+            com.google.android.material.bottomnavigation.BottomNavigationView bottomNav =
+                    view.findViewById(R.id.child_bottom_navigation);
+
             bottomNav.setItemIconTintList(null);
-            NavigationUI.setupWithNavController(bottomNav, navController);
+            androidx.navigation.ui.NavigationUI.setupWithNavController(bottomNav, navController);
+
+            boolean isLinked = requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+                    .getBoolean("isLinked", false);
+
+            if (isLinked) {
+                bottomNav.setOnItemSelectedListener(item -> {
+                    if (item.getItemId() == R.id.generateCodeFragment) {
+                        navController.navigate(R.id.sendSugarChildFragment);
+                        return true;
+                    }
+                    return androidx.navigation.ui.NavigationUI.onNavDestinationSelected(item, navController);
+                });
+            }
         }
     }
 }

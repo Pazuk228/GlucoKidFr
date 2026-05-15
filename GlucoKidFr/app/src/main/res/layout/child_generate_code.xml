@@ -54,6 +54,18 @@
         android:textSize="22sp"
         app:cornerRadius="50dp" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnReady"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#68B83B"
+        android:text="Родитель ввел код"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:cornerRadius="50dp" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

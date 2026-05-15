@@ -7,15 +7,21 @@
 
     <fragment
         android:id="@+id/generateCodeFragment"
-        android:name="com.example.glucokidfr.ui.child.GenerateCodeFragment"
-        android:label="Код"
-        tools:layout="@layout/child_generate_code" />
+        android:name="com.example.glucokidfr.ui.generateCode.GenerateCodeFragment"
+        tools:layout="@layout/child_generate_code">
+
+        <action
+            android:id="@+id/action_generateCodeFragment_to_sendSugarChildFragment"
+            app:destination="@id/sendSugarChildFragment"
+            app:popUpTo="@id/generateCodeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
-        android:id="@+id/childHomeFragment"
-        android:name="androidx.fragment.app.Fragment"
-        android:label="Главная"
-        tools:layout="@layout/home_screen_child"/>
+        android:id="@+id/sendSugarChildFragment"
+        android:name="com.example.glucokidfr.ui.sendSugarChild.SendSugarChildFragment"
+        tools:layout="@layout/send_sugar_child" />
+
 
     <fragment
         android:id="@+id/scheduleFragment"

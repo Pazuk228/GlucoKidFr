@@ -65,4 +65,21 @@ public class ScheduleViewModel extends ViewModel {
         }
         return result;
     }
+    public void loadHistoryForParent(Long parentId) {
+        isLoading.setValue(true);
+        error.setValue(null);
+
+        repository.getChildren(String.valueOf(parentId), status -> {
+            if (status.getErrors() != null) {
+                isLoading.postValue(false);
+                error.postValue("Ошибка загрузки детей: " + status.getErrors().getMessage());
+            } else if (status.getValue() != null && !status.getValue().isEmpty()) {
+                Long firstChildId = status.getValue().get(0).getId();
+                loadSugarHistory(String.valueOf(firstChildId));
+            } else {
+                isLoading.postValue(false);
+                error.postValue("У вас пока нет привязанных детей");
+            }
+        });
+    }
 }
