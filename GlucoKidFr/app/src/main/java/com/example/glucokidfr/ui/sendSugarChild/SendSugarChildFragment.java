@@ -69,7 +69,7 @@ public class SendSugarChildFragment extends Fragment {
                         .getLong("childId", -1L);
 
                 if (currentChildId != -1L) {
-                    String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+                    String currentTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault()).format(new Date());
 
                     viewModel.addSugarLevel(String.valueOf(currentChildId), sugarValue, currentTime);
                 } else {

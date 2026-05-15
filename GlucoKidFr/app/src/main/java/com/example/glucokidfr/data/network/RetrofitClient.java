@@ -8,7 +8,7 @@ public class RetrofitClient {
     private static RetrofitClient instance = null;
     private final ApiService apiService;
 
-//  private static final String BASE_URL = "http://10.0.2.2:8080/api/"; это для сережи
+//  private static final String BASE_URL = "http://192.168.31.188:8080/api/"; это для сережи
     private static final String BASE_URL = "http://192.168.0.16:8080/api/";
     private RetrofitClient() {
         Retrofit retrofit = new Retrofit.Builder()

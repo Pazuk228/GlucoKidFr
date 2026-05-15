@@ -41,7 +41,17 @@ public class ChildMainFragment extends Fragment {
             if (isLinked) {
                 bottomNav.setOnItemSelectedListener(item -> {
                     if (item.getItemId() == R.id.generateCodeFragment) {
-                        navController.navigate(R.id.sendSugarChildFragment);
+                        if (navController.getCurrentDestination() != null &&
+                                navController.getCurrentDestination().getId() != R.id.sendSugarChildFragment) {
+
+                            androidx.navigation.NavOptions options = new androidx.navigation.NavOptions.Builder()
+                                    .setLaunchSingleTop(true)
+                                    .setRestoreState(true)
+                                    .setPopUpTo(navController.getGraph().getStartDestinationId(), false, true)
+                                    .build();
+
+                            navController.navigate(R.id.sendSugarChildFragment, null, options);
+                        }
                         return true;
                     }
                     return androidx.navigation.ui.NavigationUI.onNavDestinationSelected(item, navController);

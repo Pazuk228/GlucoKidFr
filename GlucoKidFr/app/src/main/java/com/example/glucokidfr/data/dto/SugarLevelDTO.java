@@ -8,7 +8,7 @@ public class SugarLevelDTO {
     @Nullable
     @SerializedName("id")
     public Long id;
-    @SerializedName("idChild")
+    @SerializedName("childId") //ЕСЛИ ТЫ ЕЩЕ РАЗ ПОМЕНЯЕШЬ ИМЯ В БАЗЕ, ДНИЩЕ ПРОРВЕТ НЕ ПО-ДЕТСКИ
     @Nullable
     public Long idChild;
     @SerializedName("value")

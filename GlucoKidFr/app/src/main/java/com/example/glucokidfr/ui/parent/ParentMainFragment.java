@@ -49,7 +49,17 @@ public class ParentMainFragment extends Fragment {
 
                         bottomNav.setOnItemSelectedListener(item -> {
                             if (item.getItemId() == R.id.addChildFragment) {
-                                navController.navigate(R.id.childrenListFragment);
+                                if (navController.getCurrentDestination() != null &&
+                                        navController.getCurrentDestination().getId() != R.id.childrenListFragment) {
+
+                                    androidx.navigation.NavOptions options = new androidx.navigation.NavOptions.Builder()
+                                            .setLaunchSingleTop(true)
+                                            .setRestoreState(true)
+                                            .setPopUpTo(navController.getGraph().getStartDestinationId(), false, true)
+                                            .build();
+
+                                    navController.navigate(R.id.childrenListFragment, null, options);
+                                }
                                 return true;
                             }
                             return NavigationUI.onNavDestinationSelected(item, navController);
