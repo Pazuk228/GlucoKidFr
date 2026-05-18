@@ -1,5 +1,7 @@
 package com.example.glucokidfr.ui.startScreen;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,19 @@ public class StartFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SharedPreferences prefs = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+        String userRole = prefs.getString("userRole", "");
 
+        if (isLoggedIn) {
+            if ("parent".equals(userRole)) {
+                Navigation.findNavController(view).navigate(R.id.action_startFragment_to_parentMainFragment);
+            } else if ("child".equals(userRole)) {
+                Navigation.findNavController(view).navigate(R.id.action_startFragment_to_childMainFragment);
+            }
+            return;
+        }
+//если че убрать с 26 по 37
         MaterialButton btnIParent = view.findViewById(R.id.btnIParent);
         MaterialButton btnIChild = view.findViewById(R.id.btnIChild);
 

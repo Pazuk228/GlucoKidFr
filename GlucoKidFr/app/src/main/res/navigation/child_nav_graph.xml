@@ -28,4 +28,8 @@
         android:name="com.example.glucokidfr.ui.schedule.ScheduleFragment"
         android:label="Расписание"
         tools:layout="@layout/schedule"/>
+    <fragment
+        android:id="@+id/childGamesFragment"
+        android:name="com.example.glucokidfr.ui.ChildGamesFragment.ChildGamesFragment"
+        tools:layout="@layout/fragment_child_games" />
 </navigation>

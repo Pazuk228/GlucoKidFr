@@ -18,8 +18,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="androidx.fragment.app.Fragment"
+        android:id="@+id/homeParentFragment"
+        android:name="com.example.glucokidfr.ui.homeParent.HomeParentFragment"
         android:label="Главная"
         tools:layout="@layout/home_screen_parent" />
 

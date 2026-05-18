@@ -49,15 +49,24 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             TextView tvSugarValue = rowView.findViewById(R.id.tvSugarValue);
             MaterialCardView cvSugarBg = rowView.findViewById(R.id.cvSugarBg);
 
-            tvTime.setText(sugar.getTime());
+            String rawTime = sugar.getTime();
+
+            if (rawTime != null && rawTime.contains("T")) {
+                String timePart = rawTime.split("T")[1];
+                String justTime = timePart.length() >= 5 ? timePart.substring(0, 5) : timePart;
+
+                tvTime.setText(justTime);
+            } else {
+                tvTime.setText(rawTime);
+            }
             tvSugarValue.setText(String.valueOf(sugar.getValue()));
 
-            if (sugar.getValue() < 3.9) {
-                cvSugarBg.setCardBackgroundColor(Color.parseColor("#EAE054")); // Желтый#EAE054
+            if (sugar.getValue() > 3.9 && sugar.getValue()< 5.0) {
+                cvSugarBg.setCardBackgroundColor(Color.parseColor("#68B83B")); // Желтый#EAE054
             } else if (sugar.getValue() > 7.0) {
                 cvSugarBg.setCardBackgroundColor(Color.parseColor("#FF0000")); // Красный#FF0000
             } else {
-                cvSugarBg.setCardBackgroundColor(Color.parseColor("#68B83B")); // Зеленый68B83B
+                cvSugarBg.setCardBackgroundColor(Color.parseColor("#EAE054")); // Зеленый68B83B
             }
 
             holder.llContainer.addView(rowView);

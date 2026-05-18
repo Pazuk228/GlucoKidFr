@@ -1,5 +1,6 @@
 package com.example.glucokidfr.ui.loginParent;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -58,8 +59,14 @@ public class LoginParentFragment extends Fragment {
             if (parent != null) {
                 Toast.makeText(getContext(), "Добро пожаловать, " + parent.getFirstName(), Toast.LENGTH_LONG).show();
 
-                requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
-                        .edit().putLong("parentId", parent.getId()).apply();
+            //    requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+                //             .edit().putLong("parentId", parent.getId()).apply();
+                requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+                        .edit()
+                        .putBoolean("isLoggedIn", true)
+                        .putString("userRole", "parent")
+                        .putLong("parentId", parent.getId())
+                        .apply();
 
                 Navigation.findNavController(requireView())
                         .navigate(R.id.action_loginParentFragment_to_parentMainFragment);

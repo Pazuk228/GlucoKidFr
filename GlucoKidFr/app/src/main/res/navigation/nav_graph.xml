@@ -10,13 +10,27 @@
         android:name="com.example.glucokidfr.ui.startScreen.StartFragment"
         android:label="Glucokid"
         tools:layout="@layout/choose_role">
+
         <action
             android:id="@+id/action_startFragment_to_loginParentFragment"
             app:destination="@id/loginParentFragment" />
         <action
             android:id="@+id/action_startFragment_to_loginChildFragment"
             app:destination="@id/loginChildFragment" />
+
+        <action
+            android:id="@+id/action_startFragment_to_parentMainFragment"
+            app:destination="@id/parentMainFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_startFragment_to_childMainFragment"
+            app:destination="@id/childMainFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+<!--    чтобы тестить с одного телефона убери 2 последних действия тут android:id="@+id/startFragment"-->
 
     <fragment
         android:id="@+id/loginChildFragment"
