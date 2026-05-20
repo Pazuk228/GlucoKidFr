@@ -12,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import androidx.core.util.Consumer;
 
+import retrofit2.Callback;
+
 public interface UserRepository {
     void getParent(@NotNull Long id, Consumer<Status<Parent>> callback);
     void registerParent(@NotNull Parent parent, Consumer<Status<Parent>> callback);
@@ -27,4 +29,5 @@ public interface UserRepository {
     void loginParent(@NotNull String phone, @NotNull String password, Consumer<Status<Parent>> callback);
     void generateConnectionCode(@NotNull Long childId, Consumer<Status<String>> callback);
     void linkChildByCode(@NotNull String code, @NotNull Long parentId, Consumer<Status<Child>> callback);
+    void updateChildName(@NotNull Long childId, @NotNull String newName, Consumer<Status<Child>> callback);
 }

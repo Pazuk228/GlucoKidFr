@@ -37,6 +37,12 @@ public class ChildrenListFragment extends Fragment {
         loadChildren();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadChildren();
+    }
+
     private void loadChildren() {
         Long parentId = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
                 .getLong("parentId", -1L);

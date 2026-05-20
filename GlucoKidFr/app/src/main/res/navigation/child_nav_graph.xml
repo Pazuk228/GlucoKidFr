@@ -32,4 +32,9 @@
         android:id="@+id/childGamesFragment"
         android:name="com.example.glucokidfr.ui.ChildGamesFragment.ChildGamesFragment"
         tools:layout="@layout/fragment_child_games" />
+    <fragment
+        android:id="@+id/childSettingsFragment"
+        android:name="com.example.glucokidfr.ui.childSettings.ChildSettingsFragment"
+        android:label="Настройки ребенка"
+        tools:layout="@layout/setting_child" />
 </navigation>

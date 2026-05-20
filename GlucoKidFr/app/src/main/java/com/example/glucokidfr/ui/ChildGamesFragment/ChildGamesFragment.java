@@ -25,20 +25,8 @@ public class ChildGamesFragment extends Fragment {
         ImageView btnSettings = view.findViewById(R.id.btnSettings);
 
         btnSettings.setOnClickListener(v -> {
-
-            requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
-                    .edit()
-                    .clear()
-                    .apply();
-
-            androidx.navigation.NavController rootNavController =
-                    androidx.navigation.Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-
-            androidx.navigation.NavOptions options = new androidx.navigation.NavOptions.Builder()
-                    .setPopUpTo(R.id.nav_graph, true)
-                    .build();
-
-            rootNavController.navigate(R.id.startFragment, null, options);
+            androidx.navigation.Navigation.findNavController(v)
+                    .navigate(R.id.childSettingsFragment);
         });
     }
 }

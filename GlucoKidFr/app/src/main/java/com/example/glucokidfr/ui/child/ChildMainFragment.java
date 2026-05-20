@@ -35,12 +35,14 @@ public class ChildMainFragment extends Fragment {
             bottomNav.setItemIconTintList(null);
             androidx.navigation.ui.NavigationUI.setupWithNavController(bottomNav, navController);
 
-            boolean isLinked = requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
-                    .getBoolean("isLinked", false);
+            bottomNav.setOnItemSelectedListener(item -> {
 
-            if (isLinked) {
-                bottomNav.setOnItemSelectedListener(item -> {
-                    if (item.getItemId() == R.id.generateCodeFragment) {
+                boolean currentlyLinked = requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+                        .getBoolean("isLinked", false);
+
+                if (item.getItemId() == R.id.generateCodeFragment) {
+                    if (currentlyLinked) {
+
                         if (navController.getCurrentDestination() != null &&
                                 navController.getCurrentDestination().getId() != R.id.sendSugarChildFragment) {
 
@@ -54,9 +56,10 @@ public class ChildMainFragment extends Fragment {
                         }
                         return true;
                     }
-                    return androidx.navigation.ui.NavigationUI.onNavDestinationSelected(item, navController);
-                });
-            }
+                }
+
+                return androidx.navigation.ui.NavigationUI.onNavDestinationSelected(item, navController);
+            });
         }
     }
 }

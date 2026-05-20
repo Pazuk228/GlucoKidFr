@@ -37,6 +37,15 @@ public class GenerateCodeFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(GenerateCodeViewModel.class);
 
+        boolean isLinked = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+                .getBoolean("isLinked", false);
+
+        if (isLinked) {
+            androidx.navigation.Navigation.findNavController(view)
+                    .navigate(R.id.action_generateCodeFragment_to_sendSugarChildFragment);
+            return;
+        }
+
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
             btnGenerateCode.setEnabled(!isLoading);

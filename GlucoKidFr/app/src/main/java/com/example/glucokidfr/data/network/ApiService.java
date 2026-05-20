@@ -3,6 +3,7 @@ package com.example.glucokidfr.data.network;
 import com.example.glucokidfr.data.dto.ChildDTO;
 import com.example.glucokidfr.data.dto.ParentDTO;
 import com.example.glucokidfr.data.dto.SugarLevelDTO;
+import com.example.glucokidfr.domain.entities.Child;
 
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -34,5 +35,9 @@ public interface ApiService {
     Call<String> generateConnectionCode(@Path("id") Long childId);
     @POST("parent/{parentId}/connect")
     Call<ChildDTO> linkChildByCode(@Path("parentId") long parentId, @Query("code") String code);
+    @PUT("/api/child/{id}")
+    Call<ChildDTO> updateChild(@Path("id") Long id, @Body ChildDTO dto);
+    @GET("/api/parent/{parentId}/children")
+    Call<List<Child>> getMyChildren(@Path("parentId") Long parentId);
 }
 //HTTP
