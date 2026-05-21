@@ -40,7 +40,7 @@
                 android:id="@+id/tvChildName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Имя Ребенка"
+                android:text="@string/placeholder_child_name"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -49,7 +49,7 @@
                 android:id="@+id/tvChildStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Данные загружаются..."
+                android:text="@string/status_loading"
                 android:textColor="#555555"
                 android:textSize="14sp" />
         </LinearLayout>

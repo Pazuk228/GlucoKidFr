@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -28,6 +28,7 @@ public class ChildSettingsFragment extends Fragment {
 
     private TextInputEditText etName;
     private MaterialButton btnSaveData;
+    private ProgressBar progressBar;
 
     public ChildSettingsFragment() {
         super(R.layout.setting_child);
@@ -45,6 +46,7 @@ public class ChildSettingsFragment extends Fragment {
         ImageView btnBack = view.findViewById(R.id.btnBack);
         etName = view.findViewById(R.id.etName);
         btnSaveData = view.findViewById(R.id.btnSaveData);
+        progressBar = view.findViewById(R.id.progressBar);
         MaterialButton btnLogout = view.findViewById(R.id.btnLogout);
 
         btnBack.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
@@ -52,14 +54,23 @@ public class ChildSettingsFragment extends Fragment {
         int savedAvatarId = prefs.getInt("childAvatar", R.drawable.cat_orange);
         ivMainAvatar.setImageResource(savedAvatarId);
 
-        String savedName = prefs.getString("childName", "");
-        etName.setText(savedName);
+        Long childId = prefs.getLong("childId", -1L);
+        if (childId != -1L) {
+            viewModel.loadChildData(childId);
+        }
+
+        viewModel.getChildData().observe(getViewLifecycleOwner(), child -> {
+            if (child != null) {
+                etName.setText(child.getFirstName());
+            }
+        });
 
         cardAvatar.setOnClickListener(v -> showAvatarDialog());
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             btnSaveData.setEnabled(!isLoading);
             btnSaveData.setText(isLoading ? "Сохранение..." : "Сохранить данные");
+            if (progressBar != null) progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         });
 
         viewModel.getError().observe(getViewLifecycleOwner(), error -> {
@@ -71,19 +82,18 @@ public class ChildSettingsFragment extends Fragment {
         viewModel.getUpdateSuccess().observe(getViewLifecycleOwner(), success -> {
             if (success) {
                 Toast.makeText(getContext(), "Данные успешно сохранены!", Toast.LENGTH_SHORT).show();
-                prefs.edit().putString("childName", etName.getText().toString().trim()).apply();
             }
         });
 
         btnSaveData.setOnClickListener(v -> {
-            Long currentChildId = prefs.getLong("childId", -1L);
-            String newName = etName.getText().toString().trim();
-            viewModel.updateChildData(currentChildId, newName);
+            if (childId != -1L) {
+                String newName = etName.getText().toString().trim();
+                viewModel.updateChildData(childId, newName);
+            }
         });
 
         btnLogout.setOnClickListener(v -> {
             prefs.edit().clear().apply();
-
             NavController rootNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
             NavOptions options = new NavOptions.Builder()
                     .setPopUpTo(R.id.nav_graph, true)
@@ -98,7 +108,6 @@ public class ChildSettingsFragment extends Fragment {
         builder.setView(dialogView);
 
         AlertDialog dialog = builder.create();
-
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
@@ -119,6 +128,7 @@ public class ChildSettingsFragment extends Fragment {
             dialog.dismiss();
         });
     }
+
     private void changeAvatar(int drawableResId) {
         ivMainAvatar.setImageResource(drawableResId);
         prefs.edit().putInt("childAvatar", drawableResId).apply();

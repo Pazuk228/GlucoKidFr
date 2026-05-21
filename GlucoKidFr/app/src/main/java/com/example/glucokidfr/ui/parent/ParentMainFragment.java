@@ -32,38 +32,34 @@ public class ParentMainFragment extends Fragment {
             NavController navController = navHostFragment.getNavController();
             BottomNavigationView bottomNav = view.findViewById(R.id.bottom_navigation);
             bottomNav.setItemIconTintList(null);
+
             NavigationUI.setupWithNavController(bottomNav, navController);
+
             checkChildrenAndSetupMenu(bottomNav, navController);
         }
     }
 
     private void checkChildrenAndSetupMenu(BottomNavigationView bottomNav, NavController navController) {
-        Long parentId = requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+        Long parentId = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
                 .getLong("parentId", -1L);
 
         new UserRepositoryImpl(RetrofitClient.getInstance().getApiService())
                 .getChildren(String.valueOf(parentId), status -> {
-                    if (status.getValue() != null && !status.getValue().isEmpty()) {
-                        MenuItem addChildItem = bottomNav.getMenu().findItem(R.id.addChildFragment);
-                        addChildItem.setIcon(R.drawable.cat_orange);
 
-                        bottomNav.setOnItemSelectedListener(item -> {
-                            if (item.getItemId() == R.id.addChildFragment) {
-                                if (navController.getCurrentDestination() != null &&
-                                        navController.getCurrentDestination().getId() != R.id.childrenListFragment) {
+                    if (status.getValue() == null || status.getValue().isEmpty()) {
+                        navController.navigate(R.id.addChildFragment);
+                    }
+                    else {
+                        bottomNav.setVisibility(View.VISIBLE);
 
-                                    androidx.navigation.NavOptions options = new androidx.navigation.NavOptions.Builder()
-                                            .setLaunchSingleTop(true)
-                                            .setRestoreState(true)
-                                            .setPopUpTo(navController.getGraph().getStartDestinationId(), false, true)
-                                            .build();
+                        MenuItem childTab = bottomNav.getMenu().findItem(R.id.childrenListFragment);
+                        if (childTab == null) {
+                            childTab = bottomNav.getMenu().findItem(R.id.addChildFragment);
+                        }
 
-                                    navController.navigate(R.id.childrenListFragment, null, options);
-                                }
-                                return true;
-                            }
-                            return NavigationUI.onNavDestinationSelected(item, navController);
-                        });
+                        if (childTab != null) {
+                            childTab.setIcon(R.drawable.cat_orange);
+                        }
                     }
                 });
     }

@@ -259,4 +259,30 @@ public class UserRepositoryImpl implements UserRepository {
                 )
         ));
     }
+    @Override
+    public void updateParent(@NotNull Long parentId, @NotNull ParentDTO dto, Consumer<Status<Parent>> callback) {
+        apiService.updateParent(parentId, dto).enqueue(new ToConsumer<>(
+                callback,
+                responseDto -> new Parent(
+                        responseDto.id,
+                        responseDto.firstName,
+                        responseDto.secondName,
+                        responseDto.lastName,
+                        responseDto.phone,
+                        responseDto.password
+                )
+        ));
+    }
+    @Override
+    public void getChild(@NotNull Long id, Consumer<Status<Child>> callback) {
+        apiService.getChild(id).enqueue(new ToConsumer<>(callback, dto ->
+                new Child(dto.id,
+                        null,
+                        dto.firstName,
+                        dto.secondName,
+                        dto.lastName,
+                        dto.phone,
+                        dto.password)
+        ));
+    }
 }

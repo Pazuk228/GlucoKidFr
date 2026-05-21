@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="Выбери питомца"
+        android:text="@string/title_choose_pet"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -50,5 +50,4 @@
             android:focusable="true"
             android:src="@drawable/fox_obkurenniy" />
     </LinearLayout>
-
 </LinearLayout>

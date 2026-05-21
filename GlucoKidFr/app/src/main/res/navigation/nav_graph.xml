@@ -30,7 +30,6 @@
             app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
     </fragment>
-<!--    чтобы тестить с одного телефона убери 2 последних действия тут android:id="@+id/startFragment"-->
 
     <fragment
         android:id="@+id/loginChildFragment"

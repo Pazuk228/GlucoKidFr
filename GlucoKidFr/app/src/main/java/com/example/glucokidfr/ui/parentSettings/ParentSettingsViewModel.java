@@ -1,56 +1,55 @@
-package com.example.glucokidfr.ui.childSettings;
+package com.example.glucokidfr.ui.parentSettings;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.glucokidfr.data.dto.ParentDTO;
 import com.example.glucokidfr.data.dto.UserRepositoryImpl;
 import com.example.glucokidfr.data.network.RetrofitClient;
-import com.example.glucokidfr.domain.entities.Child;
+import com.example.glucokidfr.domain.entities.Parent;
 
-public class ChildSettingsViewModel extends ViewModel {
+public class ParentSettingsViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
     private final MutableLiveData<Boolean> updateSuccess = new MutableLiveData<>(false);
     private final MutableLiveData<String> error = new MutableLiveData<>();
-    private final MutableLiveData<Child> childData = new MutableLiveData<>();
     private final UserRepositoryImpl repository;
+    private final MutableLiveData<Parent> parentData = new MutableLiveData<>();
 
-    public ChildSettingsViewModel() {
+    public ParentSettingsViewModel() {
         repository = new UserRepositoryImpl(RetrofitClient.getInstance().getApiService());
     }
 
     public LiveData<Boolean> getIsLoading() { return isLoading; }
     public LiveData<Boolean> getUpdateSuccess() { return updateSuccess; }
     public LiveData<String> getError() { return error; }
-    public LiveData<Child> getChildData() { return childData; }
-
-    public void loadChildData(Long childId) {
+    public LiveData<Parent> getParentData() { return parentData; }
+    public void loadParentData(Long parentId) {
         isLoading.setValue(true);
-        repository.getChild(childId, status -> {
+        repository.getParent(parentId, status -> {
             isLoading.postValue(false);
             if (status.getErrors() != null) {
-                error.postValue("Ошибка загрузки: " + status.getErrors().getMessage());
+                error.postValue(status.getErrors().getMessage());
             } else if (status.getValue() != null) {
-                childData.postValue(status.getValue());
+                parentData.postValue(status.getValue());
             }
         });
     }
 
-    public void updateChildData(Long childId, String newName) {
+    public void updateParentData(Long parentId, String firstName, String lastName, String secondName, String phone) {
         isLoading.setValue(true);
-        error.setValue(null);
-        updateSuccess.setValue(false);
 
-        if (newName == null || newName.trim().isEmpty()) {
-            isLoading.setValue(false);
-            error.setValue("Имя не может быть пустым");
-            return;
-        }
+        ParentDTO dto = new ParentDTO();
+        dto.firstName = firstName.isEmpty() ? null : firstName;
+        dto.lastName = lastName.isEmpty() ? null : lastName;
+        dto.secondName = secondName.isEmpty() ? null : secondName;
+        dto.phone = phone.isEmpty() ? null : phone;
 
-        repository.updateChildName(childId, newName, status -> {
+        repository.updateParent(parentId, dto, status -> {
             isLoading.postValue(false);
             if (status.getErrors() != null) {
-                error.postValue("Ошибка: " + status.getErrors().getMessage());
+                error.postValue(status.getErrors().getMessage());
             } else {
                 updateSuccess.postValue(true);
             }

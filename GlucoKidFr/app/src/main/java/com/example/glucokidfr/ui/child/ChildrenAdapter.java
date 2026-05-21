@@ -15,7 +15,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
     private List<Child> childrenList = new ArrayList<>();
 
     public void setChildren(List<Child> children) {
-        this.childrenList = children;
+        this.childrenList.clear();
+        this.childrenList.addAll(children);
         notifyDataSetChanged();
     }
 

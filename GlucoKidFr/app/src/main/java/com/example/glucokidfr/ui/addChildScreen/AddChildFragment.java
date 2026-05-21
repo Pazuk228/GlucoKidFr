@@ -57,6 +57,11 @@ public class AddChildFragment extends Fragment {
             if (child != null) {
                 Toast.makeText(getContext(), "Ребёнок успешно добавлен!", Toast.LENGTH_LONG).show();
 
+                requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
+                        .edit()
+                        .putBoolean("isLinked", true)
+                        .apply();
+
                 Navigation.findNavController(requireView())
                         .navigate(R.id.action_addChildFragment_to_childrenListFragment);
             }

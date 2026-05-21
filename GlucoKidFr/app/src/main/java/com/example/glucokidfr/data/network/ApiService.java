@@ -39,5 +39,9 @@ public interface ApiService {
     Call<ChildDTO> updateChild(@Path("id") Long id, @Body ChildDTO dto);
     @GET("/api/parent/{parentId}/children")
     Call<List<Child>> getMyChildren(@Path("parentId") Long parentId);
+    @PUT("/api/parent/{id}")
+    Call<ParentDTO> updateParent(@Path("id") Long id, @Body ParentDTO dto);
+    @GET("child/{id}")
+    Call<ChildDTO> getChild(@Path("id") long childId);
 }
 //HTTP

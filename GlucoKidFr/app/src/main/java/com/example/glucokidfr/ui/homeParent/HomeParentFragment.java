@@ -22,23 +22,14 @@ public class HomeParentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ImageView btnSettings = view.findViewById(R.id.btnSettingsParent);
 
-        btnSettings.setOnClickListener(v -> {
+        View btnSettings = view.findViewById(R.id.btnSettingsParent);
 
-            requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
-                    .edit()
-                    .clear()
-                    .apply();
-
-            androidx.navigation.NavController rootNavController =
-                    androidx.navigation.Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-
-            androidx.navigation.NavOptions options = new androidx.navigation.NavOptions.Builder()
-                    .setPopUpTo(R.id.nav_graph, true)
-                    .build();
-
-            rootNavController.navigate(R.id.startFragment, null, options);
-        });
+        if (btnSettings != null) {
+            btnSettings.setOnClickListener(v -> {
+                androidx.navigation.Navigation.findNavController(v)
+                        .navigate(R.id.parentSettingsFragment);
+            });
+        }
     }
 }

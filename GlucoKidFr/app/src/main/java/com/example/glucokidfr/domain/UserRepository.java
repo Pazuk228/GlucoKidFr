@@ -2,6 +2,7 @@ package com.example.glucokidfr.domain;
 
 import android.media.RouteListingPreference;
 
+import com.example.glucokidfr.data.dto.ParentDTO;
 import com.example.glucokidfr.domain.entities.Child;
 import com.example.glucokidfr.domain.entities.Parent;
 import com.example.glucokidfr.domain.entities.Status;
@@ -30,4 +31,6 @@ public interface UserRepository {
     void generateConnectionCode(@NotNull Long childId, Consumer<Status<String>> callback);
     void linkChildByCode(@NotNull String code, @NotNull Long parentId, Consumer<Status<Child>> callback);
     void updateChildName(@NotNull Long childId, @NotNull String newName, Consumer<Status<Child>> callback);
+    void updateParent(@NotNull Long parentId, @NotNull ParentDTO dto, Consumer<Status<Parent>> callback);
+    void getChild(@NotNull Long id, Consumer<Status<Child>> callback);
 }
