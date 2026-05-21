@@ -62,7 +62,7 @@ public class LoginChildFragment extends Fragment {
                 requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
                         .edit()
                         .putBoolean("isLoggedIn", true)
-                        .putBoolean("isLinked", true)
+                        .putBoolean("isLinked", false)
                         .putString("userRole", "child")
                         .putLong("childId", child.getId())
                         .apply();

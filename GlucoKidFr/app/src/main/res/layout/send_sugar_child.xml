@@ -48,7 +48,7 @@
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:theme="@style/Widget.AppCompat.EditText" />
+                android:theme="@style/MyStyleLol" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
