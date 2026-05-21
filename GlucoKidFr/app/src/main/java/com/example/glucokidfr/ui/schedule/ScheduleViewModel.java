@@ -19,6 +19,7 @@ public class ScheduleViewModel extends ViewModel {
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
     private final MutableLiveData<String> error = new MutableLiveData<>();
     private final MutableLiveData<List<MealGroup>> scheduleData = new MutableLiveData<>();
+    private final List<SugarLevel> allRawHistory = new ArrayList<>();
 
     private final UserRepositoryImpl repository;
 
@@ -30,7 +31,7 @@ public class ScheduleViewModel extends ViewModel {
     public LiveData<String> getError() { return error; }
     public LiveData<List<MealGroup>> getScheduleData() { return scheduleData; }
 
-    public void loadSugarHistory(String childId) {
+    public void loadSugarHistory(String childId, String currentDateYMD) {
         isLoading.setValue(true);
         error.setValue(null);
 
@@ -40,32 +41,15 @@ public class ScheduleViewModel extends ViewModel {
             if (status.getErrors() != null) {
                 error.postValue(status.getErrors().getMessage());
             } else if (status.getValue() != null) {
-                List<MealGroup> groupedData = groupMeasurements(status.getValue());
-                scheduleData.postValue(groupedData);
+                allRawHistory.clear();
+                allRawHistory.addAll(status.getValue());
+
+                filterByDate(currentDateYMD);
             }
         });
     }
 
-    private List<MealGroup> groupMeasurements(List<SugarLevel> rawList) {
-        Map<String, List<SugarLevel>> map = new HashMap<>();
-
-        for (SugarLevel sugar : rawList) {
-            String meal = sugar.getExtra();
-            if (meal == null || meal.isEmpty()) meal = "Другое";
-
-            if (!map.containsKey(meal)) {
-                map.put(meal, new ArrayList<>());
-            }
-            map.get(meal).add(sugar);
-        }
-
-        List<MealGroup> result = new ArrayList<>();
-        for (Map.Entry<String, List<SugarLevel>> entry : map.entrySet()) {
-            result.add(new MealGroup(entry.getKey(), entry.getValue()));
-        }
-        return result;
-    }
-    public void loadHistoryForParent(Long parentId) {
+    public void loadHistoryForParent(Long parentId, String currentDateYMD) {
         isLoading.setValue(true);
         error.setValue(null);
 
@@ -75,11 +59,35 @@ public class ScheduleViewModel extends ViewModel {
                 error.postValue("Ошибка загрузки детей: " + status.getErrors().getMessage());
             } else if (status.getValue() != null && !status.getValue().isEmpty()) {
                 Long firstChildId = status.getValue().get(0).getId();
-                loadSugarHistory(String.valueOf(firstChildId));
+                loadSugarHistory(String.valueOf(firstChildId), currentDateYMD);
             } else {
                 isLoading.postValue(false);
                 error.postValue("У вас пока нет привязанных детей");
             }
         });
+    }
+
+    public void filterByDate(String dateYMD) {
+        Map<String, List<SugarLevel>> map = new HashMap<>();
+
+        for (SugarLevel sugar : allRawHistory) {
+            if (sugar.getTime() != null && sugar.getTime().startsWith(dateYMD)) {
+
+                String meal = sugar.getExtra();
+                if (meal == null || meal.isEmpty()) meal = "Другое";
+
+                if (!map.containsKey(meal)) {
+                    map.put(meal, new ArrayList<>());
+                }
+                map.get(meal).add(sugar);
+            }
+        }
+
+        List<MealGroup> result = new ArrayList<>();
+        for (Map.Entry<String, List<SugarLevel>> entry : map.entrySet()) {
+            result.add(new MealGroup(entry.getKey(), entry.getValue()));
+        }
+
+        scheduleData.postValue(result);
     }
 }

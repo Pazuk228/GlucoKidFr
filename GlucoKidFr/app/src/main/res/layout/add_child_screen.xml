@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="#FFF495">
 
+    <ImageView
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:padding="8dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/arrow_back"
+        app:tint="#FFA000" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

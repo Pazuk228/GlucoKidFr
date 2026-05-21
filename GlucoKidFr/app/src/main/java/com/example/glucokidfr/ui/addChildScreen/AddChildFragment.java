@@ -2,6 +2,7 @@ package com.example.glucokidfr.ui.addChildScreen;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,11 @@ public class AddChildFragment extends Fragment {
         btnSubmitCode = view.findViewById(R.id.btnSubmitCode);
         progressBar = view.findViewById(R.id.progressBar);
         tvError = view.findViewById(R.id.tvError);
+        ImageView btnBack = view.findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(v -> {
+            androidx.navigation.Navigation.findNavController(v).popBackStack();
+        });
 
         viewModel = new ViewModelProvider(this).get(AddChildViewModel.class);
 
