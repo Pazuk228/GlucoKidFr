@@ -7,6 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -37,11 +38,6 @@ public class AddChildFragment extends Fragment {
         btnSubmitCode = view.findViewById(R.id.btnSubmitCode);
         progressBar = view.findViewById(R.id.progressBar);
         tvError = view.findViewById(R.id.tvError);
-        ImageView btnBack = view.findViewById(R.id.btnBack);
-
-        btnBack.setOnClickListener(v -> {
-            androidx.navigation.Navigation.findNavController(v).popBackStack();
-        });
 
         viewModel = new ViewModelProvider(this).get(AddChildViewModel.class);
 
@@ -70,6 +66,12 @@ public class AddChildFragment extends Fragment {
 
                 Navigation.findNavController(requireView())
                         .navigate(R.id.action_addChildFragment_to_childrenListFragment);
+            }
+        });
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(view).popBackStack();
             }
         });
 

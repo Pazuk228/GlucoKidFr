@@ -59,10 +59,9 @@ public class LoginChildFragment extends Fragment {
             if (child != null) {
                 Toast.makeText(getContext(), "Привет, " + child.getFirstName(), Toast.LENGTH_SHORT).show();
 
-                //requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
-                //        .edit().putLong("childId", child.getId()).apply();
                 requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
                         .edit()
+                        .putBoolean("isLoggedIn", true)
                         .putBoolean("isLinked", true)
                         .putString("userRole", "child")
                         .putLong("childId", child.getId())

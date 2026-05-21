@@ -282,7 +282,6 @@ public class UserRepositoryImpl implements UserRepository {
                         dto.secondName,
                         dto.lastName,
                         dto.phone,
-                        dto.password)
-        ));
+                        dto.password)));
     }
 }

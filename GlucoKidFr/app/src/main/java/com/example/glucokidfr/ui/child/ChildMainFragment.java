@@ -1,11 +1,17 @@
 package com.example.glucokidfr.ui.child;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 import com.example.glucokidfr.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ChildMainFragment extends Fragment {
 
@@ -17,42 +23,42 @@ public class ChildMainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        androidx.navigation.fragment.NavHostFragment navHostFragment =
-                (androidx.navigation.fragment.NavHostFragment) getChildFragmentManager()
-                        .findFragmentById(R.id.child_nav_host_fragment);
+        NavHostFragment navHostFragment = (NavHostFragment) getChildFragmentManager()
+                .findFragmentById(R.id.child_nav_host_fragment);
 
         if (navHostFragment != null) {
-            androidx.navigation.NavController navController = navHostFragment.getNavController();
-            com.google.android.material.bottomnavigation.BottomNavigationView bottomNav =
-                    view.findViewById(R.id.child_bottom_navigation);
+            NavController navController = navHostFragment.getNavController();
+            BottomNavigationView bottomNav = view.findViewById(R.id.child_bottom_navigation);
 
             bottomNav.setItemIconTintList(null);
-            androidx.navigation.ui.NavigationUI.setupWithNavController(bottomNav, navController);
+            NavigationUI.setupWithNavController(bottomNav, navController);
+
+            view.post(() -> {
+                SharedPreferences prefs = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+                boolean isLinked = prefs.getBoolean("isLinked", false);
+
+                if (isLinked) {
+                    bottomNav.setVisibility(View.VISIBLE);
+                    if (navController.getCurrentDestination() != null &&
+                            navController.getCurrentDestination().getId() == R.id.generateCodeFragment) {
+                        navController.navigate(R.id.sendSugarChildFragment);
+                    }
+                } else {
+                    bottomNav.setVisibility(View.GONE);
+                    navController.navigate(R.id.generateCodeFragment);
+                }
+            });
 
             bottomNav.setOnItemSelectedListener(item -> {
+                SharedPreferences prefs = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+                boolean currentlyLinked = prefs.getBoolean("isLinked", false);
 
-                boolean currentlyLinked = requireActivity().getSharedPreferences("AppPrefs", android.content.Context.MODE_PRIVATE)
-                        .getBoolean("isLinked", false);
-
-                if (item.getItemId() == R.id.generateCodeFragment) {
-                    if (currentlyLinked) {
-
-                        if (navController.getCurrentDestination() != null &&
-                                navController.getCurrentDestination().getId() != R.id.sendSugarChildFragment) {
-
-                            androidx.navigation.NavOptions options = new androidx.navigation.NavOptions.Builder()
-                                    .setLaunchSingleTop(true)
-                                    .setRestoreState(true)
-                                    .setPopUpTo(navController.getGraph().getStartDestinationId(), false, true)
-                                    .build();
-
-                            navController.navigate(R.id.sendSugarChildFragment, null, options);
-                        }
-                        return true;
-                    }
+                if (item.getItemId() == R.id.generateCodeFragment && currentlyLinked) {
+                    navController.navigate(R.id.sendSugarChildFragment);
+                    return true;
                 }
 
-                return androidx.navigation.ui.NavigationUI.onNavDestinationSelected(item, navController);
+                return NavigationUI.onNavDestinationSelected(item, navController);
             });
         }
     }
