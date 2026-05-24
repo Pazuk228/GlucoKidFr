@@ -51,6 +51,17 @@ public class ChildGamesFragment extends Fragment {
 
         List<FoodItem> junkFoodList = new ArrayList<>();
         junkFoodList.add(new FoodItem(R.drawable.img));
+        junkFoodList.add(new FoodItem(R.drawable.img_1));
+        junkFoodList.add(new FoodItem(R.drawable.img_2));
+        junkFoodList.add(new FoodItem(R.drawable.img_3));
+        junkFoodList.add(new FoodItem(R.drawable.img_4));
+        junkFoodList.add(new FoodItem(R.drawable.img_5));
+        junkFoodList.add(new FoodItem(R.drawable.img_6));
+        junkFoodList.add(new FoodItem(R.drawable.img_7));
+        junkFoodList.add(new FoodItem(R.drawable.img_8));
+        junkFoodList.add(new FoodItem(R.drawable.img_9));
+        junkFoodList.add(new FoodItem(R.drawable.img_10));
+        junkFoodList.add(new FoodItem(R.drawable.img_11));
 
 
         RecyclerView rv = view.findViewById(R.id.rvFoodList);

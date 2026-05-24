@@ -2,7 +2,6 @@ package com.example.glucokidfr.ui.childrenList;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -14,13 +13,15 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.glucokidfr.R;
+import com.example.glucokidfr.data.dto.UserRepositoryImpl;
+import com.example.glucokidfr.data.network.RetrofitClient;
 import com.example.glucokidfr.domain.entities.Child;
 import com.example.glucokidfr.ui.child.ChildrenAdapter;
+import com.example.glucokidfr.ui.parent.SharedParentViewModel;
 
 public class ChildrenListFragment extends Fragment {
     private ChildrenAdapter adapter;
-    private ChildrenListViewModel viewModel;
-    private Long parentId;
+    private SharedParentViewModel sharedViewModel;
 
     public ChildrenListFragment() {
         super(R.layout.fragment_children_list);
@@ -30,50 +31,50 @@ public class ChildrenListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        SharedPreferences prefs = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
-        parentId = prefs.getLong("parentId", -1L);
-
-        viewModel = new ViewModelProvider(this).get(ChildrenListViewModel.class);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedParentViewModel.class);
 
         RecyclerView rv = view.findViewById(R.id.rvChildrenList);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new ChildrenAdapter(child -> showUnlinkDialog(child));
+        adapter = new ChildrenAdapter(new ChildrenAdapter.OnChildInteractionListener() {
+            @Override
+            public void onUnlinkClick(Child child) {
+                showUnlinkDialog(child);
+            }
+
+            @Override
+            public void onChildClick(Child child) {
+                sharedViewModel.selectChild(child.getId());
+                Toast.makeText(getContext(), child.getFirstName() + " выбран", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         rv.setAdapter(adapter);
 
         view.findViewById(R.id.btnSmallAddChild).setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_childrenListFragment_to_addChildFragment);
         });
 
-        viewModel.getChildren().observe(getViewLifecycleOwner(), children -> {
-            if (children != null) {
-                adapter.setChildren(children);
-            }
-        });
-
-        viewModel.getError().observe(getViewLifecycleOwner(), error -> {
-            if (error != null) {
-                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        viewModel.getUnlinkSuccess().observe(getViewLifecycleOwner(), success -> {
-            if (success != null && success) {
-                Toast.makeText(getContext(), "Ребенок успешно отвязан", Toast.LENGTH_SHORT).show();
-                viewModel.resetUnlinkStatus();
-            }
-        });
-
-        if (parentId != -1L) {
-            viewModel.loadChildren(parentId);
-        }
+        loadChildren();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (parentId != null && parentId != -1L && viewModel != null) {
-            viewModel.loadChildren(parentId);
+        loadChildren();
+    }
+
+    private void loadChildren() {
+        Long parentId = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+                .getLong("parentId", -1L);
+
+        if (parentId != -1L) {
+            new UserRepositoryImpl(RetrofitClient.getInstance().getApiService())
+                    .getChildren(String.valueOf(parentId), status -> {
+                        if (status.getValue() != null) {
+                            adapter.setChildren(status.getValue());
+                        }
+                    });
         }
     }
 
@@ -82,8 +83,15 @@ public class ChildrenListFragment extends Fragment {
                 .setTitle("Отвязать ребенка")
                 .setMessage("Вы уверены, что хотите отвязать аккаунт: " + child.getFirstName() + "?")
                 .setPositiveButton("Да, отвязать", (dialog, which) -> {
+                    Long parentId = requireActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE).getLong("parentId", -1L);
                     if (parentId != -1L) {
-                        viewModel.disconnectChild(parentId, child.getId());
+                        new UserRepositoryImpl(RetrofitClient.getInstance().getApiService())
+                                .disconnectChild(parentId, child.getId(), status -> {
+                                    if (status.getErrors() == null) {
+                                        Toast.makeText(getContext(), "Ребенок отвязан", Toast.LENGTH_SHORT).show();
+                                        loadChildren();
+                                    }
+                                });
                     }
                 })
                 .setNegativeButton("Отмена", null)

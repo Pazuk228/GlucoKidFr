@@ -3,6 +3,7 @@ package com.example.glucokidfr.ui.child;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,11 +14,11 @@ import java.util.List;
 
 public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHolder> {
     private List<Child> childrenList = new ArrayList<>();
-
     private final OnChildInteractionListener listener;
 
     public interface OnChildInteractionListener {
         void onUnlinkClick(Child child);
+        void onChildClick(Child child);
     }
 
     public ChildrenAdapter(OnChildInteractionListener listener) {
@@ -46,6 +47,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         if (holder.btnUnlink != null) {
             holder.btnUnlink.setOnClickListener(v -> listener.onUnlinkClick(child));
         }
+        holder.itemView.setOnClickListener(v -> listener.onChildClick(child));
     }
 
     @Override
@@ -55,7 +57,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvStatus;
-        View btnUnlink;
+        ImageView btnUnlink;
 
         ViewHolder(View itemView) {
             super(itemView);

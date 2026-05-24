@@ -35,6 +35,3 @@ public class ToConsumer<SOURCE, DEST> implements Callback<SOURCE> {
         callback.accept(new Status<>(-1, null, throwable));
     }
 }
-
-
-//1;11;31
