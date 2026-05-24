@@ -43,5 +43,6 @@ public interface ApiService {
     Call<ParentDTO> updateParent(@Path("id") Long id, @Body ParentDTO dto);
     @GET("child/{id}")
     Call<ChildDTO> getChild(@Path("id") long childId);
+    @DELETE("/api/parent/{parentId}/disconnect/{childId}")
+    Call<Void> disconnectChild(@Path("parentId") Long parentId, @Path("childId") Long childId);
 }
-//HTTP

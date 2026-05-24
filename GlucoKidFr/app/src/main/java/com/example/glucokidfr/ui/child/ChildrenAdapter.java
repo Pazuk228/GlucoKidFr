@@ -14,6 +14,16 @@ import java.util.List;
 public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHolder> {
     private List<Child> childrenList = new ArrayList<>();
 
+    private final OnChildInteractionListener listener;
+
+    public interface OnChildInteractionListener {
+        void onUnlinkClick(Child child);
+    }
+
+    public ChildrenAdapter(OnChildInteractionListener listener) {
+        this.listener = listener;
+    }
+
     public void setChildren(List<Child> children) {
         this.childrenList.clear();
         this.childrenList.addAll(children);
@@ -32,6 +42,10 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
         Child child = childrenList.get(position);
         holder.tvName.setText(child.getFirstName());
         holder.tvStatus.setText("Нажми для просмотра истории");
+
+        if (holder.btnUnlink != null) {
+            holder.btnUnlink.setOnClickListener(v -> listener.onUnlinkClick(child));
+        }
     }
 
     @Override
@@ -41,11 +55,13 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvStatus;
+        View btnUnlink;
 
         ViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvChildName);
             tvStatus = itemView.findViewById(R.id.tvChildStatus);
+            btnUnlink = itemView.findViewById(R.id.btnUnlink);
         }
     }
 }

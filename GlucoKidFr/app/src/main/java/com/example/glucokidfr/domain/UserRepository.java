@@ -33,4 +33,5 @@ public interface UserRepository {
     void updateChildName(@NotNull Long childId, @NotNull String newName, Consumer<Status<Child>> callback);
     void updateParent(@NotNull Long parentId, @NotNull ParentDTO dto, Consumer<Status<Parent>> callback);
     void getChild(@NotNull Long id, Consumer<Status<Child>> callback);
+    void disconnectChild(Long parentId, Long childId, Consumer<Status<Void>> callback);
 }

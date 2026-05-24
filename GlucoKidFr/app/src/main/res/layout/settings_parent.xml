@@ -116,17 +116,17 @@
             app:layout_constraintVertical_bias="1.0"
             tools:layout_editor_absoluteX="20dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnUnlink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:backgroundTint="#E53935"
-            android:text="Отвязать ребенка"
-            android:textColor="@color/white"
-            app:cornerRadius="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/btnLogout"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="20dp" />
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/btnUnlink"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:backgroundTint="#E53935"-->
+<!--            android:text="Отвязать ребенка"-->
+<!--            android:textColor="@color/white"-->
+<!--            app:cornerRadius="20dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/btnLogout"-->
+<!--            tools:ignore="MissingConstraints"-->
+<!--            tools:layout_editor_absoluteX="20dp" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

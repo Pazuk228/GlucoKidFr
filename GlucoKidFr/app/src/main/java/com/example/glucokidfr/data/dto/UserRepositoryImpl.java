@@ -282,6 +282,13 @@ public class UserRepositoryImpl implements UserRepository {
                         dto.secondName,
                         dto.lastName,
                         dto.phone,
-                        dto.password)));
+                        dto.password
+                )
+        ));
+    }
+    public void disconnectChild(Long parentId, Long childId, Consumer<Status<Void>> callback) {
+        apiService.disconnectChild(parentId, childId).enqueue(
+                new ToConsumer<>(callback, response -> null)
+        );
     }
 }

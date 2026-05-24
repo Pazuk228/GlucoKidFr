@@ -11,7 +11,14 @@ import java.util.List;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     private List<FoodItem> items;
-    public FoodAdapter(List<FoodItem> items) { this.items = items; }
+
+    public FoodAdapter(List<FoodItem> items) {
+        this.items = items;
+    }
+    public void setItems(List<FoodItem> newItems) {
+        this.items = newItems;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -26,10 +33,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     }
 
     @Override
-    public int getItemCount() { return items.size(); }
+    public int getItemCount() {
+        return items.size();
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        ViewHolder(View v) { super(v); imageView = v.findViewById(R.id.ivFoodImage); }
+        ViewHolder(View v) {
+            super(v);
+            imageView = v.findViewById(R.id.ivFoodImage);
+        }
     }
 }
