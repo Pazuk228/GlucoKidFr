@@ -78,7 +78,6 @@ public class ChildMainFragment extends Fragment {
                     }
                     return true;
                 }
-
                 return NavigationUI.onNavDestinationSelected(item, navController);
             });
         }

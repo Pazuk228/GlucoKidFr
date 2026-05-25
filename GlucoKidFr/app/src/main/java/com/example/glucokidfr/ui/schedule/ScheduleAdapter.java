@@ -61,12 +61,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
             }
             tvSugarValue.setText(String.valueOf(sugar.getValue()));
 
-            if (sugar.getValue() > 3.9 && sugar.getValue()< 5.0) {
+            if (sugar.getValue() > 3.9 && sugar.getValue()< 6.1) {
                 cvSugarBg.setCardBackgroundColor(Color.parseColor("#68B83B")); // Желтый#EAE054
-            } else if (sugar.getValue() > 7.0) {
-                cvSugarBg.setCardBackgroundColor(Color.parseColor("#FF0000")); // Красный#FF0000
+            } else if (sugar.getValue() > 6.1 && sugar.getValue()< 10) {
+                cvSugarBg.setCardBackgroundColor(Color.parseColor("#EAE054")); // Красный#FF0000
             } else {
-                cvSugarBg.setCardBackgroundColor(Color.parseColor("#EAE054")); // Зеленый68B83B
+                cvSugarBg.setCardBackgroundColor(Color.parseColor("#FF0000")); // Зеленый68B83B
             }
 
             holder.llContainer.addView(rowView);
