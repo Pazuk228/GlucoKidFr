@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.glucokidfr.ui.startScreen.StartFragment"
+        android:label="Glucokid"
+        tools:layout="@layout/choose_role">
+
+        <action
+            android:id="@+id/action_startFragment_to_loginParentFragment"
+            app:destination="@id/loginParentFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_loginChildFragment"
+            app:destination="@id/loginChildFragment" />
+
+        <action
+            android:id="@+id/action_startFragment_to_parentMainFragment"
+            app:destination="@id/parentMainFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_startFragment_to_childMainFragment"
+            app:destination="@id/childMainFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginChildFragment"
+        android:name="com.example.glucokidfr.ui.loginChild.LoginChildFragment"
+        android:label="Вход для ребёнка"
+        tools:layout="@layout/login">
+        <action
+            android:id="@+id/action_loginChildFragment_to_registerChildFragment"
+            app:destination="@id/registerChildFragment" />
+
+        <action
+            android:id="@+id/action_loginChildFragment_to_childMainFragment"
+            app:destination="@id/childMainFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerChildFragment"
+        android:name="com.example.glucokidfr.ui.registerChild.RegisterChildFragment"
+        android:label="Регистрация ребёнка"
+        tools:layout="@layout/registration" />
+
+    <fragment
+        android:id="@+id/loginParentFragment"
+        android:name="com.example.glucokidfr.ui.loginParent.LoginParentFragment"
+        android:label="Вход для родителя"
+        tools:layout="@layout/login">
+
+        <action
+            android:id="@+id/action_loginParentFragment_to_registerParentFragment"
+            app:destination="@id/registerParentFragment" />
+
+        <action
+            android:id="@+id/action_loginParentFragment_to_parentMainFragment"
+            app:destination="@id/parentMainFragment"
+            app:popUpTo="@id/startFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerParentFragment"
+        android:name="com.example.glucokidfr.ui.registerParent.RegisterParentFragment"
+        android:label="Регистрация родителя"
+        tools:layout="@layout/registration" />
+
+    <fragment
+        android:id="@+id/parentMainFragment"
+        android:name="com.example.glucokidfr.ui.parent.ParentMainFragment"
+        android:label="Главный экран родителя"
+        tools:layout="@layout/fragment_parent_main" />
+
+    <fragment
+        android:id="@+id/childMainFragment"
+        android:name="com.example.glucokidfr.ui.child.ChildMainFragment"
+        android:label="Главный экран ребенка"
+        tools:layout="@layout/fragment_child_main" />
+
+</navigation>

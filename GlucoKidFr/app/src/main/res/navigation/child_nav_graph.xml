@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/child_nav_graph"
+    app:startDestination="@id/generateCodeFragment">
+
+    <fragment
+        android:id="@+id/generateCodeFragment"
+        android:name="com.example.glucokidfr.ui.generateCode.GenerateCodeFragment"
+        tools:layout="@layout/child_generate_code">
+
+        <action
+            android:id="@+id/action_generateCodeFragment_to_sendSugarChildFragment"
+            app:destination="@id/sendSugarChildFragment"
+            app:popUpTo="@id/generateCodeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sendSugarChildFragment"
+        android:name="com.example.glucokidfr.ui.sendSugarChild.SendSugarChildFragment"
+        tools:layout="@layout/send_sugar_child" />
+
+
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.example.glucokidfr.ui.schedule.ScheduleFragment"
+        android:label="Расписание"
+        tools:layout="@layout/schedule"/>
+    <fragment
+        android:id="@+id/childGamesFragment"
+        android:name="com.example.glucokidfr.ui.ChildGamesFragment.ChildGamesFragment"
+        tools:layout="@layout/fragment_child_games" />
+    <fragment
+        android:id="@+id/childSettingsFragment"
+        android:name="com.example.glucokidfr.ui.childSettings.ChildSettingsFragment"
+        android:label="Настройки ребенка"
+        tools:layout="@layout/setting_child" />
+</navigation>

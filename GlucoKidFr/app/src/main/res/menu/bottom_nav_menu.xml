@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeParentFragment"
+        android:icon="@drawable/carrot_img"
+        android:title="Главная" />
+    <item
+        android:id="@+id/childrenListFragment"
+        android:icon="@drawable/add_img"
+        android:title="Добавить" />
+    <item
+        android:id="@+id/scheduleFragment"
+        android:icon="@drawable/set_img"
+        android:title="Расписание" />
+</menu>
